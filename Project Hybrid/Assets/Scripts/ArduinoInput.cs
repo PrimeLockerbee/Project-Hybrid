@@ -45,9 +45,23 @@ public class ArduinoInput : MonoBehaviour
     }
 
     // Parses data from the serial.println of the arduino.
-    private float GetWaterLevel()
+    public float GetWaterLevel()
     {
-        throw new System.NotImplementedException();
+        // throw new System.NotImplementedException();
+
+        string dataString = serialPort.ReadLine();
+
+        float value = 0;
+        try
+        {
+            value = float.Parse(dataString);
+        }
+        catch (Exception e)
+        {
+            return -1;
+        }
+
+        return value;
 
         // Example:
 /*        string dataString = serialPort.ReadLine();
