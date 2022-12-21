@@ -308,7 +308,6 @@ GameObject:
   - component: {fileID: 1333965876}
   - component: {fileID: 1333965875}
   - component: {fileID: 1333965879}
-  - component: {fileID: 1333965880}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -411,25 +410,7 @@ MonoBehaviour:
   minWaterLevel: 50
   maxWaterLevel: 200
   conditionValue: 0.5
---- !u!320 &1333965880
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1333965874}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 551b8fc8790c0b342af90601c2af0e33, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: 4236285630245097105, guid: 551b8fc8790c0b342af90601c2af0e33, type: 2}
-    value: {fileID: 0}
-  m_ExposedReferences:
-    m_References: []
+  testValue: 0
 --- !u!1 &1385274038
 GameObject:
   m_ObjectHideFlags: 0
