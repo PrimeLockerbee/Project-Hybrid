@@ -10,4 +10,9 @@ public static class Helpers
         float newValue = Mathf.Lerp(min2, max2, normalizedValue);
         return newValue;
     }
+
+    public static Vector3Int ToVector3Int(this Vector3 vector)
+    {
+        return new Vector3Int(Mathf.RoundToInt(vector.x), Mathf.RoundToInt(vector.y), Mathf.RoundToInt(vector.z));
+    }
 }
