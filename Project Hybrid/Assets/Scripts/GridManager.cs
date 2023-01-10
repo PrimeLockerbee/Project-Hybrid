@@ -1,10 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GridManager : MonoBehaviour
 {
+    public int numOfHighTiles = 10;
+    public GameObject playerPrefab;
     public Dictionary<Vector3Int, Tile> grid = new Dictionary<Vector3Int, Tile>();
+    public List<Tile> tiles => grid.Values.ToList();
 
     public void Awake()
     {
@@ -14,14 +18,88 @@ public class GridManager : MonoBehaviour
         {
             grid.Add(tile.position, tile);
         }
+
+        foreach (Tile tile in tiles)
+        {
+            tile.StoreNeighbours(grid);
+        }
     }
 
     private void Start()
     {
-        foreach(Tile tile in grid.Values)
+        DivideWaterLevels();
+        SpawnBoat();
+    }
+
+    private void DivideWaterLevels()
+    {
+        List<WaterTile> highTiles = new List<WaterTile>();
+
+        DistributeHighTiles(highTiles);
+
+        foreach (WaterTile tile in highTiles)
         {
-            tile.StoreNeighbours(grid);
+            // Geef alle neighbours een waterlevel van eigen -1 in. Herhaal voor iedereens neighbours.
+            DecideNeighbourWaterlevel(tile);
         }
+    }
+
+    private void DistributeHighTiles(List<WaterTile> _highTiles)
+    {
+        for (int i = 0; i < numOfHighTiles; i++)
+        {
+            WaterTile randomTile = tiles[Random.Range(0, tiles.Count)] as WaterTile;
+            if (randomTile == null) { i--; continue; }
+            randomTile.waterLevel = 5;
+            _highTiles.Add(randomTile);
+        }
+    }
+
+    private void DecideNeighbourWaterlevel(WaterTile _tile)
+    {
+        // Base Case:
+        if (_tile == null || _tile.waterLevel <= 1) return;
+
+        foreach (WaterTile neighbour in _tile.neighbourList)
+        {
+            // Here 0 means that the water level is not defined
+            if (neighbour.waterLevel == 0 || neighbour.waterLevel <= _tile.waterLevel - 1)
+            {
+                neighbour.waterLevel = _tile.waterLevel - 1;
+                DecideNeighbourWaterlevel(neighbour);
+            }
+            else if (neighbour.waterLevel == _tile.waterLevel - 1) { 
+                neighbour.waterLevel = _tile.waterLevel;
+                DecideNeighbourWaterlevel(neighbour);
+            }
+        }
+    }
+
+    // Move actual spawning to gameManager
+    private void SpawnBoat()
+    {
+        float highestWaterLevel = 5;
+        List<Tile> highestTiles = new List<Tile>();
+        /*        for (int i = 0; i < 5; i++)
+                {
+                    highestTiles = grid.Select(pair => pair.Value)
+                        .Where(tile => tile is WaterTile && (tile as WaterTile).waterLevel == highestWaterLevel - i)
+                        .ToList();
+
+                    if (highestTiles != null || highestTiles.Count != 0)
+                    {
+                        break;
+                    }
+                }*/
+
+        highestTiles = grid.Select(pair => pair.Value)
+        .Where(tile => tile is WaterTile && (tile as WaterTile).waterLevel == highestWaterLevel)
+        .ToList();
+
+        Tile randomTile = highestTiles[Random.Range(0, highestTiles.Count)];
+        Vector3Int randomPos = randomTile.position;
+
+        Instantiate(playerPrefab, randomPos, Quaternion.identity);
     }
 
     public Tile GetTile(Vector3Int _pos)
@@ -69,7 +147,7 @@ public class GridManager : MonoBehaviour
             }
 
             Tile currentTile = grid[currentNode.position];
-            List<Tile> neighbours = currentTile.neighbours;
+            List<Tile> neighbours = currentTile.neighbourList;
 
             foreach (Tile neighbourTile in neighbours)
             {

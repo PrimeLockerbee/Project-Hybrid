@@ -15,4 +15,17 @@ public static class Helpers
     {
         return new Vector3Int(Mathf.RoundToInt(vector.x), Mathf.RoundToInt(vector.y), Mathf.RoundToInt(vector.z));
     }
+
+    public static Direction Opposite(this Direction dir)
+    {
+        switch (dir)
+        {
+            case Direction.Left: return Direction.Right;
+            case Direction.Right: return Direction.Left;
+            case Direction.Up: return Direction.Down;
+            case Direction.Down: return Direction.Up;
+            default: return Direction.None;
+        }
+              
+    }
 }
