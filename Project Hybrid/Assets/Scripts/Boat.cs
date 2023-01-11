@@ -6,6 +6,9 @@ using System.Linq;
 
 public class Boat : MovingObject
 {
+    [SerializeField] private StatBar fuelBar;
+
+
     [Tooltip("The lower the number, the more the ship will try to keep straight.")]
     [Range(-10, 0)]
     [SerializeField] private float SameDirectionScoreModifier = -1;
@@ -37,7 +40,10 @@ public class Boat : MovingObject
         fuel += _amount;
         fuel = Mathf.Clamp(fuel, 0, maxFuel);
 
-        Debug.Log(fuel);
+        if (fuelBar != null)
+        {
+            fuelBar.SetSliderValue(fuel/maxFuel);
+        }
     }
 
     private async void MoveToLowestLevel()

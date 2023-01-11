@@ -8,11 +8,11 @@ public class Dam : MovingObject
 
     public async void MoveUp()
     {
-        await MoveToInSeconds(transform.position, transform.position + Vector3.up * moveHeight, animationDuration);
+        await MoveToInSeconds(transform.position, transform.position + Vector3.up * moveHeight * GridCell.gridSize, animationDuration);
     }
 
     public async void MoveDown()
     {
-        await MoveToInSeconds(transform.position, transform.position - Vector3.up * moveHeight, animationDuration);
+        await MoveToInSeconds(transform.position, transform.position - Vector3.up * moveHeight * GridCell.gridSize, animationDuration);
     }
 }
