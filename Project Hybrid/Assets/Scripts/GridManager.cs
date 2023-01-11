@@ -20,7 +20,7 @@ public class GridManager : MonoBehaviour
 
         foreach (Tile tile in tiles)
         {
-            grid.Add(tile.position, tile);
+            grid.Add(tile.Position.cellCords, tile);
         }
 
         foreach (Tile tile in tiles)
@@ -158,7 +158,7 @@ public class GridManager : MonoBehaviour
         .ToList();
 
         Tile randomTile = highestTiles[Random.Range(0, highestTiles.Count)];
-        Vector3Int randomPos = randomTile.position;
+        Vector3Int randomPos = randomTile.Position.ToWorldPos();
 
         Instantiate(playerPrefab, randomPos, Quaternion.identity);
     }
@@ -212,10 +212,10 @@ public class GridManager : MonoBehaviour
 
             foreach (Tile neighbourTile in neighbours)
             {
-                if (visitedPositions.Contains(neighbourTile.position))
+                if (visitedPositions.Contains(neighbourTile.Position.cellCords))
                 {
                     // Get node, Calculate new score, Update if necassary
-                    Node neighbourNode = GetNode(neighbourTile.position, openNodes);
+                    Node neighbourNode = GetNode(neighbourTile.Position.cellCords, openNodes);
                     if (!openNodes.Contains(neighbourNode)) continue;   // Make sure the node is still open
 
                     float newGScore = neighbourNode.previous.GScore + 1;
@@ -228,13 +228,13 @@ public class GridManager : MonoBehaviour
                 else
                 {
                     // Create new node, add to openNodes
-                    Node neighbourNode = new Node(_position: neighbourTile.position,
+                    Node neighbourNode = new Node(_position: neighbourTile.Position.cellCords,
                                                     _previous: currentNode,
                                                     _GScore: (int)currentNode.GScore + 1,
-                                                    _HScore: CalculateHScore(neighbourTile.position, _endPos));
+                                                    _HScore: CalculateHScore(neighbourTile.Position.cellCords, _endPos));
 
                     openNodes.Add(neighbourNode);
-                    visitedPositions.Add(neighbourTile.position);
+                    visitedPositions.Add(neighbourTile.Position.cellCords);
                 }
             }
         }

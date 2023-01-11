@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MarcoHelpers;
 using EventSystem = MarcoHelpers.EventSystem;
 using System.Linq;
+using System.Drawing.Text;
 
 public enum Direction
 {
@@ -20,7 +21,17 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     public TileType type;
 
-    public Vector3Int position => transform.position.ToVector3Int();
+    public GridCell Position {
+        get
+        {
+            if (cell == null)
+            {
+                cell = new GridCell(GridCell.WorldPosToCellCord(transform.position.ToVector3Int()));
+            }
+            return cell;
+        }
+    }
+    private GridCell cell;
 
     [HideInInspector] public List<Tile> neighbourList => neighbourDictionary.Keys.ToList();
     public Dictionary<Tile, Direction> neighbourDictionary = new Dictionary<Tile, Direction>();
@@ -33,7 +44,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             {
                 if (x == z || x == -z || (x == 0 && z == 0)) continue;
 
-                Vector3Int newPos = position + x * Vector3Int.right + z * Vector3Int.forward;
+                Vector3Int newPos = Position.cellCords + x * Vector3Int.right /** GridCell.gridSize*/ + z * Vector3Int.forward/* * GridCell.gridSize*/;
                 if (_grid.ContainsKey(newPos))
                 {
                     Tile neighbour = _grid[newPos];
@@ -54,10 +65,10 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         Debug.Log(transform.position);
         foreach (Tile tile in neighbourDictionary.Keys)
         {
-            Debug.Log("Neighbour: " + tile.position);
+            Debug.Log("Neighbour: " + tile.Position);
         }
 
-        EventSystem.RaiseEvent(EventName.TILE_CLICKED, position);
+        EventSystem.RaiseEvent(EventName.TILE_CLICKED, Position);
     }
 
     public bool isDeadEnd()

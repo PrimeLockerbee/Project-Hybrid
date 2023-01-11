@@ -8,11 +8,14 @@ public class Boat : MovingObject
 {
     [Tooltip("The lower the number, the more the ship will try to keep straight.")]
     [Range(-10, 0)]
-    public float SameDirectionScoreModifier = -1;
+    [SerializeField] private float SameDirectionScoreModifier = -1;
     [Tooltip("With higher numbers, the ship is less likely to turn around")]
     [Range(0, 10)]
-    public float OppositeDirectionScoreModifier = 1;
+    [SerializeField] private float OppositeDirectionScoreModifier = 1;
 
+    [SerializeField] private float maxFuel = 100;
+
+    private float fuel;
     private GridManager _gridManager;
     private Direction lastDirection;
 
@@ -23,8 +26,18 @@ public class Boat : MovingObject
 
     private void Start()
     {
+        fuel = maxFuel / 2;     // Start with half of the max fuel
+
         CleanCurrentTile();
         MoveToLowestLevel();
+    }
+
+    public void AddFuel(float _amount)
+    {
+        fuel += _amount;
+        fuel = Mathf.Clamp(fuel, 0, maxFuel);
+
+        Debug.Log(fuel);
     }
 
     private async void MoveToLowestLevel()
@@ -65,7 +78,7 @@ public class Boat : MovingObject
         if (bestNeighbourScore <= currentTile.waterLevel && bestNeighbour != null)
         {
             lastDirection = currentTile.neighbourDictionary[bestNeighbour];
-            await MoveToPosition(bestNeighbour.position);
+            await MoveToPosition(bestNeighbour.Position.ToWorldPos());          // Boat should move to worldPosition!
             MoveToLowestLevel();
         }
     }
@@ -101,11 +114,15 @@ public class Boat : MovingObject
 
     private WaterTile GetCurrentWaterTile()
     {
-        return _gridManager.GetTile(transform.position.ToVector3Int()) as WaterTile;
+        return _gridManager.GetTile(GridCell.WorldPosToCellCord(transform.position.ToVector3Int())) as WaterTile;
     }
 
     private void CleanCurrentTile()
     {
-        GetCurrentWaterTile()?.Clean();
+        WaterTile currentTile = GetCurrentWaterTile();
+        if (currentTile == null) return;
+
+        if (!currentTile.isCleaned) AddFuel(10);
+        currentTile.Clean();
     }
 }
