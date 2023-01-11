@@ -1,6 +1,3 @@
-using Oculus.Interaction.Editor;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,7 +6,7 @@ public class WaterTile : Tile
     public Material waterMaterial;  // Temp
     public int waterLevel;
 
-    private MeshRenderer renderer;
+    private new MeshRenderer renderer;
 
     private void Awake()
     {
@@ -23,6 +20,7 @@ public class WaterTile : Tile
 
     public void Clean()
     {
+        if (renderer == null) return;
         renderer.material = waterMaterial;
     }
 

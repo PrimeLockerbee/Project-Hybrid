@@ -142,5 +142,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 564041294314b4340b2513ad1e86055e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SameDirectionScoreModifier: -3
-  OppositeDirectionScoreModifier: 1
+  SameDirectionScoreModifier: -1
+  OppositeDirectionScoreModifier: 2

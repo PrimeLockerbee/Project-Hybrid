@@ -39,7 +39,8 @@ public class Boat : MovingObject
         // The lower the score, the better
         foreach (Tile neighbour in neighbours)
         {
-            if (!(neighbour is WaterTile)) continue;
+            if (!(neighbour is WaterTile) 
+                || (neighbour is DamTile && !(neighbour as DamTile).isOpen)) continue;
 
             Direction moveDirection = currentTile.neighbourDictionary[neighbour];
             float directionScore;

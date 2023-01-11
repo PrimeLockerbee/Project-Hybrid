@@ -4,33 +4,15 @@ using UnityEngine;
 public class Dam : MovingObject
 {
     [SerializeField] private float animationDuration;
+    [SerializeField] private float moveHeight;
 
-    private bool isOpen;
-
-    private void Update()
+    public async void MoveUp()
     {
-        CheckInput();
+        await MoveToInSeconds(transform.position, transform.position + Vector3.up * moveHeight, animationDuration);
     }
 
-    private async void CheckInput()
+    public async void MoveDown()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!isOpen)
-            {
-                await MoveToInSeconds(transform.position, transform.position + Vector3.up * 3, animationDuration);
-                FindObjectOfType<Waterbox>().Flood();
-                Debug.Log("Open");
-            }
-            else
-            {
-                await MoveToInSeconds(transform.position, transform.position - Vector3.up * 3, animationDuration);
-                FindObjectOfType<Waterbox>().Drain();
-                Debug.Log("Close");
-            }
-
-            isOpen = !isOpen;
-        }
+        await MoveToInSeconds(transform.position, transform.position - Vector3.up * moveHeight, animationDuration);
     }
-
 }

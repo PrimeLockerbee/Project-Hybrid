@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.Callbacks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +11,8 @@ public class GridManager : MonoBehaviour
     public GameObject playerPrefab;
     public Dictionary<Vector3Int, Tile> grid = new Dictionary<Vector3Int, Tile>();
     public List<Tile> tiles => grid.Values.ToList();
+
+    private List<WaterTile> highTiles = new List<WaterTile>();
 
     public void Awake()
     {
@@ -31,10 +35,32 @@ public class GridManager : MonoBehaviour
         SpawnBoat();
     }
 
+    private void OnEnable()
+    {
+        foreach (Tile tile in tiles)
+        {
+            if (!(tile is DamTile)) continue;
+            DamTile dam = (DamTile)tile;
+
+            dam.OnOpen += OnDamOpen;
+            dam.OnClose += OnDamClose;
+        }
+    }
+
+    private void OnDisable()
+    {
+        foreach (Tile tile in tiles)
+        {
+            if (!(tile is DamTile)) continue;
+            DamTile dam = (DamTile)tile;
+
+            dam.OnOpen -= OnDamOpen;
+            dam.OnClose -= OnDamClose;
+        }
+    }
+
     private void DivideWaterLevels()
     {
-        List<WaterTile> highTiles = new List<WaterTile>();
-
         DistributeHighTiles(highTiles);
 
         foreach (WaterTile tile in highTiles)
@@ -49,9 +75,31 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < numOfHighTiles; i++)
         {
             WaterTile randomTile = tiles[Random.Range(0, tiles.Count)] as WaterTile;
-            if (randomTile == null) { i--; continue; }
+            if (randomTile == null || randomTile is DamTile) { i--; continue; }
             randomTile.waterLevel = 5;
             _highTiles.Add(randomTile);
+        }
+    }
+
+    private void OnDamOpen(DamTile _dam)
+    {
+        foreach (WaterTile tile in highTiles)
+        {
+            tile.waterLevel = 5;
+            // Geef alle neighbours een waterlevel van eigen -1 in. Herhaal voor iedereens neighbours.
+            DecideNeighbourWaterlevel(tile);
+        }
+    }
+
+    private void OnDamClose(DamTile _dam)
+    {
+        ResetAllWaterTiles();
+        _dam.waterLevel = 0;
+        foreach (WaterTile tile in highTiles)
+        {
+            tile.waterLevel = 5;
+            // Geef alle neighbours een waterlevel van eigen -1 in. Herhaal voor iedereens neighbours.
+            DecideNeighbourWaterlevel(tile);
         }
     }
 
@@ -62,6 +110,9 @@ public class GridManager : MonoBehaviour
 
         foreach (WaterTile neighbour in _tile.neighbourList)
         {
+            // No water should flow through dams
+            if (neighbour is DamTile && !(neighbour as DamTile).isOpen) continue;
+
             // Here 0 means that the water level is not defined
             if (neighbour.waterLevel == 0 || neighbour.waterLevel <= _tile.waterLevel - 1)
             {
@@ -72,6 +123,16 @@ public class GridManager : MonoBehaviour
                 neighbour.waterLevel = _tile.waterLevel;
                 DecideNeighbourWaterlevel(neighbour);
             }
+        }
+    }
+
+    private void ResetAllWaterTiles()
+    {
+        foreach(Tile tile in tiles)
+        {
+            if (!(tile is WaterTile)) continue;
+            
+            (tile as WaterTile).waterLevel = 0;
         }
     }
 
