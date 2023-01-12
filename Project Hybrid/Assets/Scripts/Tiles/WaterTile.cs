@@ -5,11 +5,12 @@ public class WaterTile : Tile
 {
     public Material waterMaterial;  // Temp
     public int waterLevel;
+    public int maxLevel = 100;
     public bool isCleaned;
 
     private new MeshRenderer renderer;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         renderer = GetComponent<MeshRenderer>();
     }
@@ -20,10 +21,9 @@ public class WaterTile : Tile
         {
             renderer.material = waterMaterial;
         }
-        //waterLevel = (int) Random.Range(1, 6);
     }
 
-    public void Clean()
+    public virtual void Clean()
     {
         isCleaned = true;
 

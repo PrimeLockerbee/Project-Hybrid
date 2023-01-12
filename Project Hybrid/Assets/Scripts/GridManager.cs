@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class GridManager : MonoBehaviour
 {
     public int numOfExtraHighTiles = 10;
-    public int highestWaterLevel = 5;
+    public int highestWaterLevel = 10;
 
     public GameObject playerPrefab;
     public Dictionary<Vector3Int, Tile> grid = new Dictionary<Vector3Int, Tile>();
@@ -39,8 +39,8 @@ public class GridManager : MonoBehaviour
                                                 .ToList();
 
         DistributeHighTiles(highTiles);
-        DivideWaterLevels();
         SpawnBoat();
+        DivideWaterLevels();
     }
 
     private void OnEnable()
@@ -73,10 +73,13 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < numOfExtraHighTiles && failedAttempts < 1000; i++)
         {
             WaterTile randomTile = tiles[Random.Range(0, tiles.Count)] as WaterTile;
-            if (randomTile == null || randomTile is DamTile || randomTile.waterLevel != 0)
+            if (randomTile == null 
+                || randomTile is DamTile 
+                || randomTile.waterLevel != 0
+                || randomTile.maxLevel < 10)
             { i--; failedAttempts++; continue; }
 
-            randomTile.waterLevel = highestWaterLevel;
+            randomTile.waterLevel = Mathf.Clamp(randomTile.maxLevel, 0, highestWaterLevel);
             _highTiles.Add(randomTile);
         }
     }
@@ -147,7 +150,8 @@ public class GridManager : MonoBehaviour
     // Move actual spawning to gameManager
     private void SpawnBoat()
     {
-        List<Tile> highestTiles = new List<Tile>();
+        // Spawn at highest tile
+        /*List<Tile> highestTiles = new List<Tile>();
 
         highestTiles = grid.Select(pair => pair.Value)
         .Where(tile => tile is WaterTile && (tile as WaterTile).waterLevel == highestWaterLevel)
@@ -156,7 +160,18 @@ public class GridManager : MonoBehaviour
         Tile randomTile = highestTiles[Random.Range(0, highestTiles.Count)];
         Vector3Int randomPos = randomTile.Position.ToWorldPos();
 
-        Instantiate(playerPrefab, randomPos, Quaternion.identity);
+        Instantiate(playerPrefab, randomPos, Quaternion.identity);*/
+
+        // Spawn at dead end
+        List<WaterTile> deadEnds = tiles.Select(tile => tile as WaterTile)
+                                        .Where(tile => tile != null && tile.isDeadEnd())
+                                        .ToList();
+
+        WaterTile randomDeadEnd = deadEnds[Random.Range(0, deadEnds.Count)];
+        randomDeadEnd.waterLevel = Mathf.Clamp(randomDeadEnd.maxLevel, 0, highestWaterLevel);
+        highTiles.Add(randomDeadEnd);
+
+        Instantiate(playerPrefab, randomDeadEnd.Position.ToWorldPos(), Quaternion.identity); 
     }
 
     public Tile GetTile(Vector3Int _pos)

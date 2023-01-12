@@ -1,23 +1,26 @@
 using UnityEngine;
-using MarcoHelpers;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
+using MarcoHelpers;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 public class Boat : MovingObject
 {
     [SerializeField] private StatBar fuelBar;
 
-
     [Tooltip("The lower the number, the more the ship will try to keep straight.")]
     [Range(-10, 0)]
-    [SerializeField] private float SameDirectionScoreModifier = -1;
+    [SerializeField] private float sameDirectionScoreModifier = -1;
     [Tooltip("With higher numbers, the ship is less likely to turn around")]
     [Range(0, 10)]
-    [SerializeField] private float OppositeDirectionScoreModifier = 1;
+    [SerializeField] private float oppositeDirectionScoreModifier = 1;
+    [Tooltip("With higher numbers, the ship is less likely to go to a clean tile")]
+    [Range(0, 10)]
+    [SerializeField] private float cleanTilePenalty = 2;
 
     [SerializeField] private float maxFuel = 100;
 
+    private bool isMoving;
     private float fuel;
     private GridManager _gridManager;
     private Direction lastDirection;
@@ -61,14 +64,18 @@ public class Boat : MovingObject
             if (!(neighbour is WaterTile) 
                 || (neighbour is DamTile && !(neighbour as DamTile).isOpen)) continue;
 
+            // Direction Penalty
             Direction moveDirection = currentTile.neighbourDictionary[neighbour];
             float directionScore;
 
-            if (moveDirection == lastDirection) directionScore = SameDirectionScoreModifier;
-            else if (moveDirection.Opposite() == lastDirection) directionScore = OppositeDirectionScoreModifier;
+            if (moveDirection == lastDirection) directionScore = sameDirectionScoreModifier;
+            else if (moveDirection.Opposite() == lastDirection) directionScore = oppositeDirectionScoreModifier;
             else directionScore = 0;
 
-            float finalScore = (neighbour as WaterTile).waterLevel + directionScore;
+            // Clean tile
+            float cleanPenalty = (neighbour as WaterTile).isCleaned ? cleanTilePenalty : 0;
+
+            float finalScore = (neighbour as WaterTile).waterLevel + directionScore + cleanPenalty;
 
             if (finalScore < bestNeighbourScore)
             {
@@ -76,16 +83,21 @@ public class Boat : MovingObject
                 bestNeighbour = neighbour as WaterTile;
             }
         }
-/*
-        WaterTile lowestNeighbour = currentTile.neighbourDictionary.Keys.Select(n => (WaterTile)n)
-                                                                        .OrderBy(n => n.waterLevel)
-                                                                        .First();*/
 
-        if (bestNeighbourScore <= currentTile.waterLevel && bestNeighbour != null)
+        if (bestNeighbour != null)
         {
+            isMoving = true;
+            if (bestNeighbourScore <= currentTile.waterLevel)
+            {
+                AddFuel(-5);
+            }
             lastDirection = currentTile.neighbourDictionary[bestNeighbour];
             await MoveToPosition(bestNeighbour.Position.ToWorldPos());          // Boat should move to worldPosition!
             MoveToLowestLevel();
+        }
+        else
+        {
+            isMoving = false;
         }
     }
 

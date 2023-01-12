@@ -1,3 +1,4 @@
+using OVR.OpenVR;
 using System;
 using UnityEngine;
 
@@ -9,8 +10,9 @@ public class DamTile : WaterTile
 
     private Dam damObject;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         damObject = GetComponentInChildren<Dam>();
     }
 
@@ -26,6 +28,11 @@ public class DamTile : WaterTile
         isOpen = false;
         damObject.MoveDown();
         OnClose?.Invoke(this);
+    }
+
+    public override void Clean()
+    {
+        base.Clean();
     }
 
     private void Update()
