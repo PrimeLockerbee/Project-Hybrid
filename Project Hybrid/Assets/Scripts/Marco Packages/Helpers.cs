@@ -26,6 +26,17 @@ public static class Helpers
             case Direction.Down: return Direction.Up;
             default: return Direction.None;
         }
-              
+    }
+
+    public static Quaternion GetRotation(this Direction dir)
+    {
+        switch (dir)
+        {
+            case Direction.Down: return Quaternion.Euler(0,180,0);
+            case Direction.Left: return Quaternion.Euler(0,-90,0);
+            case Direction.Right: return Quaternion.Euler(0,90,0);
+            case Direction.Up: 
+            default: return Quaternion.Euler(0, 0, 0);
+        }
     }
 }

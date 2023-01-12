@@ -7,6 +7,8 @@ using System.Collections.Generic;
 public class Boat : MovingObject
 {
     [SerializeField] private StatBar fuelBar;
+    [SerializeField] private float speed;
+    [SerializeField] private float rotateTime;
 
     [Tooltip("The lower the number, the more the ship will try to keep straight.")]
     [Range(-10, 0)]
@@ -91,7 +93,15 @@ public class Boat : MovingObject
             {
                 AddFuel(-5);
             }
-            lastDirection = currentTile.neighbourDictionary[bestNeighbour];
+            Direction moveDirection = currentTile.neighbourDictionary[bestNeighbour];
+
+            if (moveDirection != lastDirection)
+            {
+                RotateTowardsInSeconds(transform.rotation, moveDirection.GetRotation(), rotateTime);
+                FindObjectOfType<FollowTarget>().RotateTowardsInSeconds(transform.rotation, moveDirection.GetRotation(), 2*rotateTime);
+            }
+
+            lastDirection = moveDirection;
             await MoveToPosition(bestNeighbour.Position.ToWorldPos());          // Boat should move to worldPosition!
             MoveToLowestLevel();
         }
@@ -125,7 +135,7 @@ public class Boat : MovingObject
     public async Task MoveToPosition(Vector3 _tilePos)
     {
         _tilePos.y = transform.position.y;
-        await MoveToInSeconds(transform.position, _tilePos, 1);
+        await MoveToInSeconds(transform.position, _tilePos, 1/speed);
 
         CleanCurrentTile();
     }

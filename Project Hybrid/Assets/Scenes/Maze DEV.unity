@@ -3052,7 +3052,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &409283366
 AudioListener:
   m_ObjectHideFlags: 0
@@ -11710,7 +11710,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numOfExtraHighTiles: 15
   highestWaterLevel: 10
-  playerPrefab: {fileID: 8917319155725658584, guid: d8fbb8e890a1e674480a347f0058e793,
+  playerPrefab: {fileID: 3582648683506107980, guid: d05dc9b24a09a014198760515cd003d6,
     type: 3}
 --- !u!4 &1510678318
 Transform:
