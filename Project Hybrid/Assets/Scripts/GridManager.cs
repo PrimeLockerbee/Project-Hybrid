@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Callbacks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class GridManager : MonoBehaviour
 {
-    public int numOfHighTiles = 10;
+    public int numOfExtraHighTiles = 10;
+    public int highestWaterLevel = 5;
+
     public GameObject playerPrefab;
     public Dictionary<Vector3Int, Tile> grid = new Dictionary<Vector3Int, Tile>();
     public List<Tile> tiles => grid.Values.ToList();
 
     private List<WaterTile> highTiles = new List<WaterTile>();
+    private List<WaterTile> preLeveledTiles = new List<WaterTile>();
 
     public void Awake()
     {
@@ -31,6 +32,11 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
+        preLeveledTiles = tiles.Select(t => t as WaterTile)
+                                                .Where(t => t != null && !(t is DamTile))
+                                                .ToList();
+
+        DistributeHighTiles(highTiles);
         DivideWaterLevels();
         SpawnBoat();
     }
@@ -59,48 +65,45 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    private void DistributeHighTiles(List<WaterTile> _highTiles)
+    {
+        int failedAttempts = 0;
+        for (int i = 0; i < numOfExtraHighTiles && failedAttempts < 1000; i++)
+        {
+            WaterTile randomTile = tiles[Random.Range(0, tiles.Count)] as WaterTile;
+            if (randomTile == null || randomTile is DamTile || randomTile.waterLevel != 0)
+            { i--; failedAttempts++; continue; }
+
+            randomTile.waterLevel = highestWaterLevel;
+            _highTiles.Add(randomTile);
+        }
+    }
+
     private void DivideWaterLevels()
     {
-        DistributeHighTiles(highTiles);
-
         foreach (WaterTile tile in highTiles)
         {
             // Geef alle neighbours een waterlevel van eigen -1 in. Herhaal voor iedereens neighbours.
             DecideNeighbourWaterlevel(tile);
         }
-    }
 
-    private void DistributeHighTiles(List<WaterTile> _highTiles)
-    {
-        for (int i = 0; i < numOfHighTiles; i++)
+        foreach (WaterTile tile in preLeveledTiles)
         {
-            WaterTile randomTile = tiles[Random.Range(0, tiles.Count)] as WaterTile;
-            if (randomTile == null || randomTile is DamTile) { i--; continue; }
-            randomTile.waterLevel = 5;
-            _highTiles.Add(randomTile);
+            // Geef alle neighbours een waterlevel van eigen -1 in. Herhaal voor iedereens neighbours.
+            DecideNeighbourWaterlevel(tile);
         }
     }
 
     private void OnDamOpen(DamTile _dam)
     {
-        foreach (WaterTile tile in highTiles)
-        {
-            tile.waterLevel = 5;
-            // Geef alle neighbours een waterlevel van eigen -1 in. Herhaal voor iedereens neighbours.
-            DecideNeighbourWaterlevel(tile);
-        }
+        DivideWaterLevels();
     }
 
     private void OnDamClose(DamTile _dam)
     {
         ResetAllWaterTiles();
         _dam.waterLevel = 0;
-        foreach (WaterTile tile in highTiles)
-        {
-            tile.waterLevel = 5;
-            // Geef alle neighbours een waterlevel van eigen -1 in. Herhaal voor iedereens neighbours.
-            DecideNeighbourWaterlevel(tile);
-        }
+        DivideWaterLevels();
     }
 
     private void DecideNeighbourWaterlevel(WaterTile _tile)
@@ -130,7 +133,10 @@ public class GridManager : MonoBehaviour
     {
         foreach(Tile tile in tiles)
         {
-            if (!(tile is WaterTile)) continue;
+            if (!(tile is WaterTile) 
+                || preLeveledTiles.Contains(tile) 
+                || highTiles.Contains(tile)) 
+                continue;
             
             (tile as WaterTile).waterLevel = 0;
         }
@@ -139,19 +145,7 @@ public class GridManager : MonoBehaviour
     // Move actual spawning to gameManager
     private void SpawnBoat()
     {
-        float highestWaterLevel = 5;
         List<Tile> highestTiles = new List<Tile>();
-        /*        for (int i = 0; i < 5; i++)
-                {
-                    highestTiles = grid.Select(pair => pair.Value)
-                        .Where(tile => tile is WaterTile && (tile as WaterTile).waterLevel == highestWaterLevel - i)
-                        .ToList();
-
-                    if (highestTiles != null || highestTiles.Count != 0)
-                    {
-                        break;
-                    }
-                }*/
 
         highestTiles = grid.Select(pair => pair.Value)
         .Where(tile => tile is WaterTile && (tile as WaterTile).waterLevel == highestWaterLevel)

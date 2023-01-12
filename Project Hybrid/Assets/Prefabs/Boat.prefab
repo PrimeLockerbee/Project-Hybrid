@@ -145,7 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fuelBar: {fileID: 8438839567382897262}
   SameDirectionScoreModifier: -1
-  OppositeDirectionScoreModifier: 2
+  OppositeDirectionScoreModifier: 0
   maxFuel: 100
 --- !u!1001 &5496296368016447881
 PrefabInstance:

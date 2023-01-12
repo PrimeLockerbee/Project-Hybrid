@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using MarcoHelpers;
 using EventSystem = MarcoHelpers.EventSystem;
 using System.Linq;
-using System.Drawing.Text;
 
 public enum Direction
 {
@@ -62,13 +61,13 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData _eventData)
     {
-        Debug.Log(transform.position);
+/*        Debug.Log(transform.position);
         foreach (Tile tile in neighbourDictionary.Keys)
         {
             Debug.Log("Neighbour: " + tile.Position);
         }
 
-        EventSystem.RaiseEvent(EventName.TILE_CLICKED, Position);
+        EventSystem.RaiseEvent(EventName.TILE_CLICKED, Position);*/
     }
 
     public bool isDeadEnd()
