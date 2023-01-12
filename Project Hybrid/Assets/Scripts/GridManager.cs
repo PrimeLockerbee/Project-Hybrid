@@ -33,7 +33,9 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
         preLeveledTiles = tiles.Select(t => t as WaterTile)
-                                                .Where(t => t != null && !(t is DamTile))
+                                                .Where(t => t != null 
+                                                            && !(t is DamTile) 
+                                                            && t.waterLevel != 0)
                                                 .ToList();
 
         DistributeHighTiles(highTiles);
@@ -133,8 +135,8 @@ public class GridManager : MonoBehaviour
     {
         foreach(Tile tile in tiles)
         {
-            if (!(tile is WaterTile) 
-                || preLeveledTiles.Contains(tile) 
+            if (!(tile is WaterTile)
+                || preLeveledTiles.Contains(tile)
                 || highTiles.Contains(tile)) 
                 continue;
             
