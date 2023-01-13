@@ -11,12 +11,15 @@ public class GridManager : MonoBehaviour
     public GameObject boatObject;
     public Dictionary<Vector3Int, Tile> grid = new Dictionary<Vector3Int, Tile>();
     public List<Tile> tiles => grid.Values.ToList();
+    public List<WaterTile> waterTiles;
 
     private List<WaterTile> highTiles = new List<WaterTile>();
     private List<WaterTile> preLeveledTiles = new List<WaterTile>();
 
     public void Awake()
     {
+        ServiceLocator.RegisterService<GridManager>(this);
+
         Tile[] tiles = FindObjectsOfType<Tile>();
 
         foreach (Tile tile in tiles)
@@ -32,6 +35,9 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
+        waterTiles = tiles.Select(t => t as WaterTile)
+                            .Where(t => t != null).ToList();
+
         preLeveledTiles = tiles.Select(t => t as WaterTile)
                                                 .Where(t => t != null 
                                                             && !(t is DamTile) 
@@ -193,6 +199,12 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
+    public int CalculateCleanPercent()
+    {
+        int cleanedTiles = waterTiles.Where(tile => tile.isCleaned).Count();
+        return (int)((float) cleanedTiles/waterTiles.Count * 100);
+    }
+
     /// <summary>
     /// Uses A* to calculate a path from a starting point to a target position
     /// </summary>
@@ -206,7 +218,7 @@ public class GridManager : MonoBehaviour
         Node startNode = new Node(_position: _startPos,
                                     _previous: null,
                                     _GScore: 0,
-                                    _HScore: CalculateHScore(_startPos, _endPos));
+                                    _HScore: Node.CalculateHScore(_startPos, _endPos));
 
         List<Node> openNodes = new List<Node> { startNode };
         HashSet<Vector3Int> visitedPositions = new HashSet<Vector3Int> { startNode.position };
@@ -255,7 +267,7 @@ public class GridManager : MonoBehaviour
                     Node neighbourNode = new Node(_position: neighbourTile.Position.cellCords,
                                                     _previous: currentNode,
                                                     _GScore: (int)currentNode.GScore + 1,
-                                                    _HScore: CalculateHScore(neighbourTile.Position.cellCords, _endPos));
+                                                    _HScore: Node.CalculateHScore(neighbourTile.Position.cellCords, _endPos));
 
                     openNodes.Add(neighbourNode);
                     visitedPositions.Add(neighbourTile.Position.cellCords);
@@ -279,13 +291,6 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
-    private int CalculateHScore(Vector3Int gridPosition, Vector3Int endPos)
-    {
-        Vector3Int difference = endPos - gridPosition;
-        int score = Mathf.Abs(difference.x) + Mathf.Abs(difference.z);
-        return score;
-    }
-
     private class Node
     {
         public Vector3Int position; //Position on the grid
@@ -303,6 +308,13 @@ public class GridManager : MonoBehaviour
             previous = _previous;
             GScore = _GScore;
             HScore = _HScore;
+        }
+
+        public static int CalculateHScore(Vector3Int gridPosition, Vector3Int endPos)
+        {
+            Vector3Int difference = endPos - gridPosition;
+            int score = Mathf.Abs(difference.x) + Mathf.Abs(difference.z);
+            return score;
         }
     }
 }

@@ -34,6 +34,8 @@ public class Boat : MovingObject
     private GridManager _gridManager;
     private Direction lastDirection;
 
+    private bool isPaused;
+
     private void Awake()
     {
         _gridManager = FindObjectOfType<GridManager>();
@@ -45,6 +47,14 @@ public class Boat : MovingObject
 
         CleanCurrentTile();
         MoveToLowestTile();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RemoveFuel(5);
+        }
     }
 
     public void AddFuel(float _amount)
@@ -63,6 +73,7 @@ public class Boat : MovingObject
         fuel -= _amount;
         if (fuel <= 0)
         {
+            isPaused = true;
             EventSystem.RaiseEvent(EventName.FUEL_EMPTY);
         }
 
@@ -74,6 +85,8 @@ public class Boat : MovingObject
 
     private async void MoveToLowestTile()
     {
+        if (isPaused) return;
+
         WaterTile currentTile = GetCurrentWaterTile();
 
         List<Tile> neighbours = currentTile.neighbourDictionary.Keys.ToList();
