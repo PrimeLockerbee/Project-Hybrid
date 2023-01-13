@@ -8,7 +8,7 @@ public class GridManager : MonoBehaviour
     public int numOfExtraHighTiles = 10;
     public int highestWaterLevel = 10;
 
-    public GameObject playerPrefab;
+    public GameObject boatObject;
     public Dictionary<Vector3Int, Tile> grid = new Dictionary<Vector3Int, Tile>();
     public List<Tile> tiles => grid.Values.ToList();
 
@@ -97,6 +97,17 @@ public class GridManager : MonoBehaviour
             // Geef alle neighbours een waterlevel van eigen -1 in. Herhaal voor iedereens neighbours.
             DecideNeighbourWaterlevel(tile);
         }
+
+        List<WaterTile> zeros = tiles.Select(tile => tile as WaterTile)
+                                        .Where(tile => tile != null 
+                                                && tile.waterLevel == 0
+                                                && !(tile is DamTile))
+                                        .ToList();
+
+        foreach (WaterTile tile in zeros)
+        {
+            tile.waterLevel = 1;
+        }                
     }
 
     private void OnDamOpen(DamTile _dam)
@@ -171,7 +182,9 @@ public class GridManager : MonoBehaviour
         randomDeadEnd.waterLevel = Mathf.Clamp(randomDeadEnd.maxLevel, 0, highestWaterLevel);
         highTiles.Add(randomDeadEnd);
 
-        Instantiate(playerPrefab, randomDeadEnd.Position.ToWorldPos(), Quaternion.identity); 
+        //boatObject.transform.position = randomDeadEnd.Position.ToWorldPos();
+
+        Instantiate(boatObject, randomDeadEnd.Position.ToWorldPos(), Quaternion.identity); 
     }
 
     public Tile GetTile(Vector3Int _pos)

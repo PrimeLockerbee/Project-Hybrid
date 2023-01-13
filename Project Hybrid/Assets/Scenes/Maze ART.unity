@@ -1221,11 +1221,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761814741}
     m_Modifications:
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: maxLevel
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 4917641169423690075, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
         type: 3}
       propertyPath: m_RootOrder
@@ -2058,16 +2053,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761814741}
     m_Modifications:
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: maxLevel
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: waterLevel
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 4917641169423690075, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
         type: 3}
       propertyPath: m_RootOrder
@@ -5351,11 +5336,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761814741}
     m_Modifications:
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: waterLevel
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 4917641169423690075, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
         type: 3}
       propertyPath: m_RootOrder
@@ -6684,11 +6664,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761814741}
     m_Modifications:
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: maxLevel
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4917641169423690075, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
         type: 3}
       propertyPath: m_RootOrder
@@ -11255,11 +11230,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761814741}
     m_Modifications:
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: maxLevel
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 4917641169423690075, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
         type: 3}
       propertyPath: m_RootOrder
@@ -11922,16 +11892,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761814741}
     m_Modifications:
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: maxLevel
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: waterLevel
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 4917641169423690075, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
         type: 3}
       propertyPath: m_RootOrder
@@ -12290,11 +12250,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761814741}
     m_Modifications:
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: maxLevel
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 4917641169423690075, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
         type: 3}
       propertyPath: m_RootOrder
@@ -13587,16 +13542,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761814741}
     m_Modifications:
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: maxLevel
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: waterLevel
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 4917641169423690075, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
         type: 3}
       propertyPath: m_RootOrder
@@ -14650,11 +14595,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761814741}
     m_Modifications:
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: maxLevel
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 4917641169423690075, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
         type: 3}
       propertyPath: m_RootOrder
@@ -16374,11 +16314,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761814741}
     m_Modifications:
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: maxLevel
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 4917641169423690075, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
         type: 3}
       propertyPath: m_RootOrder
@@ -16539,11 +16474,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761814741}
     m_Modifications:
-    - target: {fileID: 2523971098960698079, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
-        type: 3}
-      propertyPath: maxLevel
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 4917641169423690075, guid: 1d9dac5eee3ffcc4a9f55097963e10cf,
         type: 3}
       propertyPath: m_RootOrder

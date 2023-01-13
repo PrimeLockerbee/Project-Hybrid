@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3142560093665634033}
   - component: {fileID: 642505110925635970}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Boat Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,13 +143,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 564041294314b4340b2513ad1e86055e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuelBar: {fileID: 8438839567382897262}
   speed: 1
   rotateTime: 1
   sameDirectionScoreModifier: -1
   oppositeDirectionScoreModifier: 3
   cleanTilePenalty: 5
+  fuelBar: {fileID: 8438839567382897262}
   maxFuel: 100
+  tileFuelCost: 1
+  tileCleanFuelBonus: 3
+  waterClimbFuelCost: 3
 --- !u!1001 &5496296368016447881
 PrefabInstance:
   m_ObjectHideFlags: 0
