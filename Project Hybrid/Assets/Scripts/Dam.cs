@@ -6,12 +6,12 @@ public class Dam : MovingObject
     [SerializeField] private float animationDuration;
     [SerializeField] private float moveHeight;
 
-    public async void MoveUp()
+    public async Task MoveUp()
     {
         await MoveToInSeconds(transform.position, transform.position + Vector3.up * moveHeight * GridCell.gridSize, animationDuration);
     }
 
-    public async void MoveDown()
+    public async Task MoveDown()
     {
         await MoveToInSeconds(transform.position, transform.position - Vector3.up * moveHeight * GridCell.gridSize, animationDuration);
     }

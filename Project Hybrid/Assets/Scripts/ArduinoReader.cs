@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,8 +14,9 @@ public class ArduinoReader : MonoBehaviour
     {
         try
         {
-            Debug.Log((float)input.GetWaterLevel());
+            Debug.Log((float)input.SendInput());
         }
         catch { }
     }
 }
+*/

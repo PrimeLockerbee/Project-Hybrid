@@ -9,13 +9,16 @@ using UnityEngine;
 public class ArduinoInput : MonoBehaviour
 {
     #region Fields
-    private SerialPort serialPort;
     public static bool isPortOpen;
+    private SerialPort serialPort;
+
+    private InputManager inputManager;
     #endregion
 
     #region Opening Serial Port
     private void Start()
     {
+        inputManager = ServiceLocator.GetService<InputManager>();
         TryOpenSerialPort();
     }
 
@@ -38,6 +41,8 @@ public class ArduinoInput : MonoBehaviour
     #region Using the Arduino Data
     private void Update()
     {
+        SendInput();
+
         if (!isPortOpen) return;
 
         // Optional
@@ -45,30 +50,46 @@ public class ArduinoInput : MonoBehaviour
     }
 
     // Parses data from the serial.println of the arduino.
-    public float GetWaterLevel()
+    public void SendInput()
     {
-        // throw new System.NotImplementedException();
+        if (inputManager == null) return;
 
-        string dataString = serialPort.ReadLine();
+        //string dataString = serialPort.ReadLine();
+        string dataString = "Dam1: 1";
 
-        float value = 0;
-        try
+        if (dataString.Contains("Dam"))
         {
-            value = float.Parse(dataString);
+            int id = 0;
+            try
+            {
+                id = int.Parse(dataString[3].ToString());
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Could not parse Dam ID");
+                return;
+            }
+
+            bool isDamOpen = false;
+            try
+            {
+                int damValue = int.Parse(dataString[6].ToString());
+                isDamOpen = Convert.ToBoolean(damValue);
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"Could not parse Dam Value of Dam {id}");
+                return;
+            }
+
+            inputManager.ReceiveDamValue(id, isDamOpen);
         }
-        catch (Exception e)
+        else if (dataString.Contains("Button"))
         {
-            return -1;
+
         }
 
-        return value;
 
-        // Example:
-/*        string dataString = serialPort.ReadLine();
-        if (dataString[0] == 'X')
-        {
-            HandleJoystickInput(dataString);
-        }*/
     }
     #endregion
 

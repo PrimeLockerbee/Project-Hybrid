@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class Move : MonoBehaviour
 {
@@ -23,7 +23,7 @@ public class Move : MonoBehaviour
     {
         Vector3 newPos = transform.position;
 
-        float waterLevel = input.GetWaterLevel();
+        float waterLevel = input.SendInput();
         //float waterLevel = testValue;
         float newY = Helpers.Map(minWaterLevel, maxWaterLevel, minY, maxY, waterLevel);
 
@@ -31,7 +31,7 @@ public class Move : MonoBehaviour
         transform.position = newPos;
     }
 
-    /*    private void Update()
+    *//*    private void Update()
         {
             float value = input.GetWaterLevel();
 
@@ -43,5 +43,6 @@ public class Move : MonoBehaviour
             {
                 transform.position = new Vector3(transform.position.x, minY, transform.position.z);
             }
-        }*/
+        }*//*
 }
+*/
