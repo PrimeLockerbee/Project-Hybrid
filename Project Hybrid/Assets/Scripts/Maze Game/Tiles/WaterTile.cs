@@ -1,14 +1,22 @@
+using System;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class WaterTile : Tile
 {
     public Material waterMaterial;  // Temp
-    public int waterLevel;
+    public int waterLevel { get { return level; } set { level = value; OnLevelChanged(level); } }
+
     public int maxLevel = 100;
     public bool isCleaned;
 
+    public float yPos;
+
+    [SerializeField] private float animationTime;
+
     private new MeshRenderer renderer;
+    private int level;
 
     protected virtual void Awake()
     {
@@ -21,6 +29,16 @@ public class WaterTile : Tile
         {
             renderer.material = waterMaterial;
         }
+    }
+
+    private void OnLevelChanged(int _waterLevel)
+    {
+        Vector3 newPos = transform.position;
+        yPos = _waterLevel * 2f - 0.5f;
+        newPos.y = yPos;
+        //MoveToInSeconds(transform.position, newPos, animationTime);
+
+        transform.position = newPos;
     }
 
     public virtual void Clean()

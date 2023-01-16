@@ -112,6 +112,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   waterMaterial: {fileID: 2100000, guid: 8de07a17dd8124441b87782a7f60e885, type: 2}
-  waterLevel: 0
   maxLevel: 100
   isCleaned: 0
+  animationTime: 0.4

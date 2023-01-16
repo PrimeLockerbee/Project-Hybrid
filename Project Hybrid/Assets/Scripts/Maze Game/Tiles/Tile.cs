@@ -14,7 +14,7 @@ public enum Direction
     Down = 4,
 }
 
-public class Tile : MonoBehaviour, IPointerClickHandler
+public class Tile : MovingObject, IPointerClickHandler
 {
     public enum TileType { Water, Grass}
 

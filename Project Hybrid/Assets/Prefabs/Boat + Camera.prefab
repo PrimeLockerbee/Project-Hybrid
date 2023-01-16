@@ -40,6 +40,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3582648683506107983}
     m_Modifications:
+    - target: {fileID: 1132536804647967179, guid: d8fbb8e890a1e674480a347f0058e793,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623381107869545233, guid: d8fbb8e890a1e674480a347f0058e793,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 6548441846045318272, guid: d8fbb8e890a1e674480a347f0058e793,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -243,7 +253,7 @@ PrefabInstance:
     - target: {fileID: 2049797435673810654, guid: 1d57e8aea71ac7d40af67354f93f5605,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 1847
+      value: 3895
       objectReference: {fileID: 0}
     - target: {fileID: 7349827855244560652, guid: 1d57e8aea71ac7d40af67354f93f5605,
         type: 3}
