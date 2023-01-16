@@ -181,7 +181,7 @@ public class GridManager : MonoBehaviour
 
         // Spawn at dead end
         List<WaterTile> deadEnds = tiles.Select(tile => tile as WaterTile)
-                                        .Where(tile => tile != null && tile.isDeadEnd())
+                                        .Where(tile => tile != null && tile.isDeadEnd() && tile.isSpawnPos)
                                         .ToList();
 
         WaterTile randomDeadEnd = deadEnds[Random.Range(0, deadEnds.Count)];

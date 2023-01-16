@@ -1,42 +1,48 @@
 using System;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class WaterTile : Tile
 {
-    public Material waterMaterial;  // Temp
+    public Material minimapWaterMat;  // Temp
+    public Material realWaterMaterial; 
     public int waterLevel { get { return level; } set { level = value; OnLevelChanged(level); } }
 
     public int maxLevel = 100;
     public bool isCleaned;
+    public bool isSpawnPos;
 
-    public float yPos;
+    [HideInInspector] public float yPos;
 
     [SerializeField] private float animationTime;
 
-    private new MeshRenderer renderer;
+    [SerializeField] private MeshRenderer minimapRenderer;
+    [SerializeField] private MeshRenderer waterRenderer;
     private int level;
 
     protected virtual void Awake()
     {
-        renderer = GetComponent<MeshRenderer>();
+        if (minimapRenderer != null || waterRenderer != null) return;
+
+        minimapRenderer = GetComponent<MeshRenderer>();
+        waterRenderer = GetComponentInChildren<MeshRenderer>();
     }
 
     private void Start()
     {
-        if (isCleaned && renderer != null)
+        if (isCleaned && minimapRenderer != null)
         {
-            renderer.material = waterMaterial;
+            minimapRenderer.material = minimapWaterMat;
         }
     }
 
-    private void OnLevelChanged(int _waterLevel)
+    private async void OnLevelChanged(int _waterLevel)
     {
+        //Debug.Log("Changed!");
         Vector3 newPos = transform.position;
-        yPos = _waterLevel * 2f - 0.5f;
+        yPos = level * .5f - 0.5f;
         newPos.y = yPos;
-        //MoveToInSeconds(transform.position, newPos, animationTime);
+        //await MoveToInSeconds(transform.position, newPos, animationTime * 2);
 
         transform.position = newPos;
     }
@@ -45,8 +51,15 @@ public class WaterTile : Tile
     {
         isCleaned = true;
 
-        if (renderer == null) return;
-        renderer.material = waterMaterial;
+        if (minimapRenderer != null)
+        {
+            minimapRenderer.material = minimapWaterMat;
+        }
+
+        if (waterRenderer != null)
+        {
+            waterRenderer.material = realWaterMaterial;
+        }
     }
 
     private void OnDrawGizmos()
