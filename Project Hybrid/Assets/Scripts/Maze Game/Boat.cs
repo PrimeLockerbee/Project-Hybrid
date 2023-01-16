@@ -45,6 +45,10 @@ public class Boat : MovingObject
     {
         fuel = maxFuel / 2;     // Start with half of the max fuel
 
+        Vector3 newPos = transform.position;
+        newPos.y = GetCurrentWaterTile().yPos;
+        transform.position = newPos;
+
         CleanCurrentTile();
         MoveToLowestTile();
     }
@@ -157,7 +161,7 @@ public class Boat : MovingObject
         return bestNeighbour;
     }
 
-    private void OnEnable()
+/*    private void OnEnable()
     {
         EventSystem.Subscribe(EventName.TILE_CLICKED, (value) => MovePath(value));
     }
@@ -165,9 +169,9 @@ public class Boat : MovingObject
     private void OnDisable()
     {
         EventSystem.Unsubscribe(EventName.TILE_CLICKED, (value) => MovePath(value));
-    }
+    }*/
 
-    public async void MovePath(object _value)
+/*    public async void MovePath(object _value)
     {
         Vector3Int targetTilePos = (Vector3Int)_value;
         List<Vector3Int> path = _gridManager.CalculatePath(transform.position.ToVector3Int(), targetTilePos);
@@ -176,14 +180,24 @@ public class Boat : MovingObject
         {
             await MoveToPosition(tilePos);
         }
-    }
+    }*/
 
     public async Task MoveToPosition(Vector3 _tilePos)
     {
-        _tilePos.y = transform.position.y;
+        _tilePos.y = GetCurrentWaterTile().yPos;
         await MoveToInSeconds(transform.position, _tilePos, 1/speed);
 
+        //AdjustHeight();
         CleanCurrentTile();
+    }
+
+    private void AdjustHeight()
+    {
+        Vector3 newPos = transform.position;
+        newPos.y = GetCurrentWaterTile().yPos;
+        //MoveToInSeconds(transform.position, newPos, 0.2f);
+
+        //transform.position = newPos;
     }
 
     private WaterTile GetCurrentWaterTile()

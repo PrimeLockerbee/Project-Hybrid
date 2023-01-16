@@ -1,34 +1,65 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
 public class WaterTile : Tile
 {
-    public Material waterMaterial;  // Temp
-    public int waterLevel;
+    public Material minimapWaterMat;  // Temp
+    public Material realWaterMaterial; 
+    public int waterLevel { get { return level; } set { level = value; OnLevelChanged(level); } }
+
     public int maxLevel = 100;
     public bool isCleaned;
+    public bool isSpawnPos;
 
-    private new MeshRenderer renderer;
+    [HideInInspector] public float yPos;
+
+    [SerializeField] private float animationTime;
+
+    [SerializeField] private MeshRenderer minimapRenderer;
+    [SerializeField] private MeshRenderer waterRenderer;
+    private int level;
 
     protected virtual void Awake()
     {
-        renderer = GetComponent<MeshRenderer>();
+        if (minimapRenderer != null || waterRenderer != null) return;
+
+        minimapRenderer = GetComponent<MeshRenderer>();
+        waterRenderer = GetComponentInChildren<MeshRenderer>();
     }
 
     private void Start()
     {
-        if (isCleaned && renderer != null)
+        if (isCleaned && minimapRenderer != null)
         {
-            renderer.material = waterMaterial;
+            minimapRenderer.material = minimapWaterMat;
         }
+    }
+
+    private async void OnLevelChanged(int _waterLevel)
+    {
+        //Debug.Log("Changed!");
+        Vector3 newPos = transform.position;
+        yPos = level * .5f - 0.5f;
+        newPos.y = yPos;
+        //await MoveToInSeconds(transform.position, newPos, animationTime * 2);
+
+        transform.position = newPos;
     }
 
     public virtual void Clean()
     {
         isCleaned = true;
 
-        if (renderer == null) return;
-        renderer.material = waterMaterial;
+        if (minimapRenderer != null)
+        {
+            minimapRenderer.material = minimapWaterMat;
+        }
+
+        if (waterRenderer != null)
+        {
+            waterRenderer.material = realWaterMaterial;
+        }
     }
 
     private void OnDrawGizmos()
