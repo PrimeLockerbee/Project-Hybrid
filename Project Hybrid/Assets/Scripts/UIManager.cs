@@ -1,14 +1,19 @@
 using MarcoHelpers;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class UIManager : MonoBehaviour
 {
     [Header("References")]
-    public GameObject menu;
-    public Text percentageText;
-    public Text funFactText;
+    [SerializeField] private GameObject menu;
+    [SerializeField] private Text percentageText;
+    [SerializeField] private Text funFactText;
+
+    [Header("Fun facts")]
+    [SerializeField] private List<FunFact> funFacts;
 
     private GridManager gridManager;
 
@@ -31,7 +36,9 @@ public class UIManager : MonoBehaviour
     public void ShowEndScreen()
     {
         menu.SetActive(true);
-        percentageText.text = $"You have removed {gridManager.CalculateCleanPercent()}% of garbage from the ocean";
+        int cleanPercentage = gridManager.CalculateCleanPercent();
+        percentageText.text = $"You have removed {cleanPercentage}% of garbage from the ocean";
+        funFactText.text = GetFunFactText(cleanPercentage);
     }
 
     public void HideEndScreen()
@@ -42,5 +49,17 @@ public class UIManager : MonoBehaviour
     public void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private string GetFunFactText(int _cleanPercentage)
+    {
+        List<FunFact> viableFunFacts = funFacts.Where(fact => fact.isPercentageInRange(_cleanPercentage)).ToList();
+
+        if (viableFunFacts.Count == 0) return $"You have removed {gridManager.CalculateCleanPercent()}% of garbage from the ocean";
+        else 
+        {
+            string factText = viableFunFacts[Random.Range(0, viableFunFacts.Count)].text;
+            return factText.Replace("PERCENTAGE", _cleanPercentage + "%");
+        }
     }
 }
