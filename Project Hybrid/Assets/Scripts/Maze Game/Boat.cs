@@ -139,8 +139,6 @@ public class Boat : MovingObject
         {
             currentSpeed = speed * Mathf.Pow(speedPerLevelModifier, Mathf.Abs(waterDifference));
         }
-
-        Debug.Log(currentSpeed);
     }
 
     private async Task RotateBoat(Direction _moveDirection)

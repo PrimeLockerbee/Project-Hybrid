@@ -80,6 +80,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   target: {fileID: 0}
   rotateTime: 0.9
+  raycastInterval: 0.4
 --- !u!1 &5572862067223995631
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +148,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1847
+    m_Bits: 67383
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

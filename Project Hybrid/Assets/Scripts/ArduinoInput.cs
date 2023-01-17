@@ -50,9 +50,8 @@ public class ArduinoInput : MonoBehaviour
     #region Using the Arduino Data
     private void Update()
     {
-        SendInput();
-
         if (!isPortOpen) return;
+        SendInput();
 
         // Optional
         if (Input.GetKeyDown(KeyCode.X)) CloseSerialPort();
@@ -63,8 +62,8 @@ public class ArduinoInput : MonoBehaviour
     {
         if (inputManager == null) return;
 
-        //string dataString = serialPort.ReadLine();
-        string dataString = "NO LASER 5";
+        string dataString = serialPort.ReadLine();
+        //string dataString = "Boop";
 
         if (dataString.Contains("DETECTED"))
         {

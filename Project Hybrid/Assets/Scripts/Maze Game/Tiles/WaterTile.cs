@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -35,6 +36,16 @@ public class WaterTile : Tile
         if (isCleaned && minimapRenderer != null)
         {
             minimapRenderer.material = minimapWaterMat;
+        }
+
+        Invoke(nameof(CheckIfIsClean), 0.1f);
+    }
+
+    private void CheckIfIsClean()
+    {
+        if (trash.Where(t => t.didSpawn).Count() == 0)
+        {
+            Clean();
         }
     }
 
