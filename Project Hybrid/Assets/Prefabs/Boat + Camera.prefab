@@ -40,6 +40,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3582648683506107983}
     m_Modifications:
+    - target: {fileID: 287652757617236013, guid: d8fbb8e890a1e674480a347f0058e793,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.55
+      objectReference: {fileID: 0}
     - target: {fileID: 6548441846045318272, guid: d8fbb8e890a1e674480a347f0058e793,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -98,12 +103,12 @@ PrefabInstance:
     - target: {fileID: 8917319155725658578, guid: d8fbb8e890a1e674480a347f0058e793,
         type: 3}
       propertyPath: tileFuelCost
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8917319155725658578, guid: d8fbb8e890a1e674480a347f0058e793,
         type: 3}
       propertyPath: tileCleanFuelBonus
-      value: 1.5
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 8917319155725658578, guid: d8fbb8e890a1e674480a347f0058e793,
         type: 3}
@@ -263,7 +268,7 @@ PrefabInstance:
     - target: {fileID: 2049797435673810654, guid: 1d57e8aea71ac7d40af67354f93f5605,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 10039
+      value: 1847
       objectReference: {fileID: 0}
     - target: {fileID: 7349827855244560652, guid: 1d57e8aea71ac7d40af67354f93f5605,
         type: 3}

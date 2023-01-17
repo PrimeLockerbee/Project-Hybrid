@@ -9,19 +9,22 @@ public class DamTile : WaterTile
     public event Action<DamTile> OnClose;
 
     [Header("Dam")]
+    [SerializeField] public Dam damObject;
     public bool isOpen;
     public int id = -1;
 
     // Private Fields
     private Task currentTask;
     private Action awaitedCall;
-    private Dam damObject;
     private bool isMoving;
 
     protected override void Awake()
     {
         base.Awake();
-        damObject = GetComponentInChildren<Dam>();
+        if (damObject == null)
+        {
+            damObject = GetComponentInChildren<Dam>();
+        }
     }
 
     public void Trigger()

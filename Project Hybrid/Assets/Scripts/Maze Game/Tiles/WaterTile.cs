@@ -13,6 +13,7 @@ public class WaterTile : Tile
     public bool isSpawnPos;
 
     [HideInInspector] public float yPos;
+    [SerializeField] private TrashSpawner[] trash;
 
     [SerializeField] private float animationTime;
 
@@ -22,6 +23,7 @@ public class WaterTile : Tile
 
     protected virtual void Awake()
     {
+        trash = GetComponentsInChildren<TrashSpawner>();
         if (minimapRenderer != null || waterRenderer != null) return;
 
         minimapRenderer = GetComponent<MeshRenderer>();
@@ -50,6 +52,11 @@ public class WaterTile : Tile
     public virtual void Clean()
     {
         isCleaned = true;
+
+        foreach (TrashSpawner spawner in trash)
+        {
+            spawner.gameObject.SetActive(false);
+        }
 
         if (minimapRenderer != null)
         {

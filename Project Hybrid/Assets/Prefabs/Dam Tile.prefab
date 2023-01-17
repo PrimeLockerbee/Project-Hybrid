@@ -112,15 +112,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af0ed92df6cbe5e41814f617f612ec90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   type: 0
   minimapWaterMat: {fileID: 2100000, guid: 8de07a17dd8124441b87782a7f60e885, type: 2}
-  realWaterMaterial: {fileID: 2100000, guid: f4d1da3fe1439c04a91eb4e58d233635, type: 2}
+  realWaterMaterial: {fileID: 2100000, guid: 4e0e3a2092916ec449db5f3452bd8f02, type: 2}
   maxLevel: 100
   isCleaned: 0
+  isSpawnPos: 0
   yPos: 0
   animationTime: 0.4
   minimapRenderer: {fileID: 329378381823769074}
   waterRenderer: {fileID: 7175696034384479329}
+  damObject: {fileID: 0}
   isOpen: 0
   id: -1
 --- !u!1 &2812526020882633739
@@ -233,7 +241,7 @@ GameObject:
   - component: {fileID: 4404519502969120723}
   - component: {fileID: 4404519502969120724}
   - component: {fileID: 4404519502969120721}
-  m_Layer: 13
+  m_Layer: 12
   m_Name: Dam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,5 +338,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a8b89266979e4845b2aa0988b67911c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   animationDuration: 1
   moveHeight: 1
