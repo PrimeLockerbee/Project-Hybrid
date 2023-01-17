@@ -2789,6 +2789,75 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1056831727}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1090405911
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3629254450356773296, guid: a5c31ed3c8878a74386bf0085e5a7bce,
+        type: 3}
+      propertyPath: m_Name
+      value: SceneManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629254450356773311, guid: a5c31ed3c8878a74386bf0085e5a7bce,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629254450356773311, guid: a5c31ed3c8878a74386bf0085e5a7bce,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 910.9089
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629254450356773311, guid: a5c31ed3c8878a74386bf0085e5a7bce,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 593.27155
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629254450356773311, guid: a5c31ed3c8878a74386bf0085e5a7bce,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.3408675
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629254450356773311, guid: a5c31ed3c8878a74386bf0085e5a7bce,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629254450356773311, guid: a5c31ed3c8878a74386bf0085e5a7bce,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629254450356773311, guid: a5c31ed3c8878a74386bf0085e5a7bce,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629254450356773311, guid: a5c31ed3c8878a74386bf0085e5a7bce,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629254450356773311, guid: a5c31ed3c8878a74386bf0085e5a7bce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629254450356773311, guid: a5c31ed3c8878a74386bf0085e5a7bce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629254450356773311, guid: a5c31ed3c8878a74386bf0085e5a7bce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a5c31ed3c8878a74386bf0085e5a7bce, type: 3}
 --- !u!1001 &1141868083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3762,9 +3831,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e2c53e36bc80e4490486a3871375b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numOfHighTiles: 8
-  playerPrefab: {fileID: 8917319155725658584, guid: d8fbb8e890a1e674480a347f0058e793,
-    type: 3}
+  numOfExtraHighTiles: 10
+  highestWaterLevel: 10
+  boatObject: {fileID: 0}
+  waterTiles: []
 --- !u!4 &1510678318
 Transform:
   m_ObjectHideFlags: 0
@@ -4860,6 +4930,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1944190920}
   - component: {fileID: 1944190919}
+  - component: {fileID: 1944190921}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -4944,6 +5015,26 @@ Transform:
   m_Father: {fileID: 1732741558}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1944190921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944190918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1001 &1963041146
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -603,9 +603,46 @@ MonoBehaviour:
   percentageText: {fileID: 1175259016776425629}
   funFactText: {fileID: 1175259017102445133}
   funFacts:
-  - text: Did you know that you suck? Only PERCENTAGE
+  - text: 'Bikini Bottom has collapsed under the sheer amount of debris. Spongebob
+      has flipped his final krabby patty and millions of kids worldwide are crying.  '
     minPercentage: 0
-    maxPercentage: 50
-  - text: Wauwie you collected PERCENTAGE!
-    minPercentage: 50
+    maxPercentage: 20
+  - text: Yikes, clearly cleaning up the sea is not your life's porpoise.
+    minPercentage: 0
+    maxPercentage: 20
+  - text: 'Rays of light are reaching the bottom! Fish are migrating to the light
+      and sea-vilizations are starting to form! '
+    minPercentage: 20
+    maxPercentage: 40
+  - text: 'YikesParts of the water are clearing up! The go-fish-ment has passed a
+      law on social distancing and fish are allowed outside of the house again! '
+    minPercentage: 20
+    maxPercentage: 40
+  - text: 'The cleanup is about halfway done! Sealife schools are opening up again
+      and sea-ciety is slowly going back to normal! '
+    minPercentage: 40
+    maxPercentage: 60
+  - text: 'The water is starting to clear up nicely! Sealife is recovering and the
+      ho-sea-tals are emptying out! '
+    minPercentage: 40
+    maxPercentage: 60
+  - text: "More than half the debris is gone! If this was a group of schooling fish,
+      you\u2019ve earned a sea+! "
+    minPercentage: 60
+    maxPercentage: 80
+  - text: 'The cleanup is going great! The sealife has good wifi now, but some fish
+      are scared of surfing the net.  '
+    minPercentage: 60
+    maxPercentage: 80
+  - text: 'Almost all the debris is gone! The way you clean up these waters is mighty
+      ef-fish-ient! '
+    minPercentage: 80
+    maxPercentage: 99
+  - text: "There\u2019s barely any debris left! Fin-tastic performance! Turtle-ly
+      awesome! Sand-tastic job! Whale done! "
+    minPercentage: 80
+    maxPercentage: 99
+  - text: 'The water is 100% clear! The Prime Fin-ister has fin-vited you for a sea-cret
+      meeting! '
+    minPercentage: 100
     maxPercentage: 100
