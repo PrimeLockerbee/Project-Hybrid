@@ -111,11 +111,7 @@ public class Boat : MovingObject
             }
 
             Direction moveDirection = currentTile.neighbourDictionary[bestNeighbour];
-            if (moveDirection != lastDirection)
-            {
-                RotateTowardsInSeconds(transform.rotation, moveDirection.GetRotation(), rotateTime);
-                FindObjectOfType<FollowTarget>().RotateTowardsInSeconds(transform.rotation, moveDirection.GetRotation(), 2 * rotateTime);
-            }
+            await RotateBoat(moveDirection);
 
             lastDirection = moveDirection;
             await MoveToPosition(bestNeighbour.Position.ToWorldPos());          // Boat should move to worldPosition!
@@ -124,6 +120,16 @@ public class Boat : MovingObject
         else
         {
             isMoving = false;
+        }
+    }
+
+    private async Task RotateBoat(Direction _moveDirection)
+    {
+        if (_moveDirection != lastDirection)
+        {
+            float rotateTimeModifier = _moveDirection == lastDirection.Opposite() ? 2f : 1f;
+            FindObjectOfType<FollowTarget>().RotateWithPlayer(_moveDirection, rotateTimeModifier);
+            await RotateTowardsInSeconds(transform.rotation, _moveDirection.GetRotation(), rotateTime * rotateTimeModifier);
         }
     }
 

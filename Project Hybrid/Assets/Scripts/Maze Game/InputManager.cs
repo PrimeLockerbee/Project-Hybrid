@@ -25,11 +25,10 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
-        damOpenDictionary.Add(1, false);
-        damOpenDictionary.Add(2, false);
-        damOpenDictionary.Add(3, false);
-        damOpenDictionary.Add(4, false);
-        damOpenDictionary.Add(5, false);
+        for(int i = 1; i <= damTiles.Count; i++)
+        {
+            damOpenDictionary.Add(i, damTiles[i].isOpen);
+        }
     }
 
     public void ReceiveDamValue(int _id, bool _value)

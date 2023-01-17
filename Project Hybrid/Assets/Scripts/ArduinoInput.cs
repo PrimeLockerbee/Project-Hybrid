@@ -55,6 +55,48 @@ public class ArduinoInput : MonoBehaviour
         if (inputManager == null) return;
 
         //string dataString = serialPort.ReadLine();
+        string dataString = "NO LASER 5";
+
+        if (dataString.Contains("DETECTED"))
+        {
+            int id = 0;
+            try
+            {
+                id = int.Parse(dataString[9].ToString());
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Could not parse Dam ID");
+                return;
+            }
+
+            bool isDamOpen = true;
+            inputManager.ReceiveDamValue(id, isDamOpen);
+        }
+        else if (dataString.Contains("NO LASER"))
+        {
+            int id = 0;
+            try
+            {
+                id = int.Parse(dataString[9].ToString());
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Could not parse Dam ID");
+                return;
+            }
+
+            bool isDamOpen = false;
+            inputManager.ReceiveDamValue(id, isDamOpen);
+        }
+    }
+
+    // Parses data from the serial.println of the arduino.
+    /*public void SendInput()
+    {
+        if (inputManager == null) return;
+
+        //string dataString = serialPort.ReadLine();
         string dataString = "Dam1: 1";
 
         if (dataString.Contains("Dam"))
@@ -88,9 +130,7 @@ public class ArduinoInput : MonoBehaviour
         {
 
         }
-
-
-    }
+    }*/
     #endregion
 
     #region Parsing Examples
