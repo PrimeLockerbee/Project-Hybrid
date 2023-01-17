@@ -228,15 +228,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 564041294314b4340b2513ad1e86055e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   speed: 3
   rotateTime: 0.5
+  speedPerLevelModifier: 1.12
   sameDirectionScoreModifier: -1
   oppositeDirectionScoreModifier: 3
   cleanTilePenalty: 5
   fuelBar: {fileID: 8438839567382897262}
   maxFuel: 100
   tileFuelCost: 1
-  tileCleanFuelBonus: 3
+  tileCleanFuelBonus: 2
   waterClimbFuelCost: 3
 --- !u!1001 &5496296368016447881
 PrefabInstance:

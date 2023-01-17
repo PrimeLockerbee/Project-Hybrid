@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO.Ports;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -13,6 +15,8 @@ public class ArduinoInput : MonoBehaviour
     private SerialPort serialPort;
 
     private InputManager inputManager;
+    private Dictionary<int, Queue<bool>> inputLists = new Dictionary<int, Queue<bool>>();
+    private int inputListsCapacity = 10;
     #endregion
 
     #region Opening Serial Port
@@ -20,6 +24,11 @@ public class ArduinoInput : MonoBehaviour
     {
         inputManager = ServiceLocator.GetService<InputManager>();
         TryOpenSerialPort();
+
+        for (int i = 1; i <= 5; i++)
+        {
+            inputLists.Add(i, new Queue<bool>(inputListsCapacity));
+        }
     }
 
     private void TryOpenSerialPort()
@@ -71,7 +80,15 @@ public class ArduinoInput : MonoBehaviour
             }
 
             bool isDamOpen = true;
-            inputManager.ReceiveDamValue(id, isDamOpen);
+
+            Queue<bool> inputList = inputLists[id];
+            if (inputList.Count >= inputListsCapacity) inputList.Dequeue();
+            inputList.Enqueue(isDamOpen);
+
+            if (IsMoreThanHalfTrue(inputList))
+            {
+                inputManager.ReceiveDamValue(id, isDamOpen);
+            }
         }
         else if (dataString.Contains("NO LASER"))
         {
@@ -87,8 +104,23 @@ public class ArduinoInput : MonoBehaviour
             }
 
             bool isDamOpen = false;
+
+            Queue<bool> inputList = inputLists[id];
+            if (inputList.Count >= inputListsCapacity) inputList.Dequeue();
+            inputList.Enqueue(isDamOpen);
+
+            if (!IsMoreThanHalfTrue(inputList))
+            {
+                inputManager.ReceiveDamValue(id, isDamOpen);
+            }
+
             inputManager.ReceiveDamValue(id, isDamOpen);
         }
+    }
+
+    public bool IsMoreThanHalfTrue(IEnumerable<bool> _list)
+    {
+        return _list.Where(x => x == true).Count() >= inputListsCapacity/2;
     }
 
     // Parses data from the serial.println of the arduino.
