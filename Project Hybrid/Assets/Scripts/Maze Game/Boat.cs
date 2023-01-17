@@ -10,6 +10,8 @@ public class Boat : MovingObject
     [SerializeField] private float speed;
     [SerializeField] private float rotateTime;
 
+    [SerializeField] private float speedPerLevelModifier = 1.2f;
+
     [Header("Behaviour")]
     [Tooltip("The lower the number, the more the ship will try to keep straight.")]
     [Range(-10, 0)]
@@ -28,7 +30,7 @@ public class Boat : MovingObject
     [SerializeField] private float tileCleanFuelBonus = 2;
     [SerializeField] private float waterClimbFuelCost = 5;
 
-
+    private float currentSpeed;
     private bool isMoving;
     private float fuel;
     private GridManager _gridManager;
@@ -43,6 +45,7 @@ public class Boat : MovingObject
 
     private void Start()
     {
+        currentSpeed = speed;
         fuel = maxFuel / 2;     // Start with half of the max fuel
 
         Vector3 newPos = transform.position;
@@ -113,6 +116,9 @@ public class Boat : MovingObject
             Direction moveDirection = currentTile.neighbourDictionary[bestNeighbour];
             await RotateBoat(moveDirection);
 
+            int waterDifference = bestNeighbour.waterLevel - currentTile.waterLevel;
+            CalculateCurrentSpeed(waterDifference);
+
             lastDirection = moveDirection;
             await MoveToPosition(bestNeighbour.Position.ToWorldPos());          // Boat should move to worldPosition!
             MoveToLowestTile();
@@ -121,6 +127,20 @@ public class Boat : MovingObject
         {
             isMoving = false;
         }
+    }
+
+    private void CalculateCurrentSpeed(int waterDifference)
+    {
+        if (waterDifference > 0)
+        {
+            currentSpeed = speed / Mathf.Pow(speedPerLevelModifier, Mathf.Abs(waterDifference));
+        }
+        else
+        {
+            currentSpeed = speed * Mathf.Pow(speedPerLevelModifier, Mathf.Abs(waterDifference));
+        }
+
+        Debug.Log(currentSpeed);
     }
 
     private async Task RotateBoat(Direction _moveDirection)
@@ -191,7 +211,7 @@ public class Boat : MovingObject
     public async Task MoveToPosition(Vector3 _tilePos)
     {
         _tilePos.y = GetCurrentWaterTile().yPos;
-        await MoveToInSeconds(transform.position, _tilePos, 1/speed);
+        await MoveToInSeconds(transform.position, _tilePos, 1/currentSpeed);
 
         //AdjustHeight();
         CleanCurrentTile();

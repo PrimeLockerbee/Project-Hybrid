@@ -55,6 +55,11 @@ PrefabInstance:
       propertyPath: speed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8917319155725658578, guid: d8fbb8e890a1e674480a347f0058e793,
+        type: 3}
+      propertyPath: speedPerLevelModifier
+      value: 1.17
+      objectReference: {fileID: 0}
     - target: {fileID: 8917319155725658579, guid: d8fbb8e890a1e674480a347f0058e793,
         type: 3}
       propertyPath: m_RootOrder

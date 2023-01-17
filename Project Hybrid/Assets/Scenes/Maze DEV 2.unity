@@ -17695,6 +17695,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Minimap
       objectReference: {fileID: 0}
+    - target: {fileID: 1980339167441745692, guid: bed5586772f19504981ea82f926244a1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3982091096332397708, guid: bed5586772f19504981ea82f926244a1,
         type: 3}
       propertyPath: m_LocalPosition.x
