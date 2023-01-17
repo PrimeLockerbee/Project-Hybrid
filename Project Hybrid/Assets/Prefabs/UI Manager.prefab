@@ -602,3 +602,10 @@ MonoBehaviour:
   menu: {fileID: 1175259016267865308}
   percentageText: {fileID: 1175259016776425629}
   funFactText: {fileID: 1175259017102445133}
+  funFacts:
+  - text: Did you know that you suck? Only PERCENTAGE
+    minPercentage: 0
+    maxPercentage: 50
+  - text: Wauwie you collected PERCENTAGE!
+    minPercentage: 50
+    maxPercentage: 100
