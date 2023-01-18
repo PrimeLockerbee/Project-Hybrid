@@ -37,12 +37,14 @@ public class Boat : MovingObject
     private Direction lastDirection;
 
     private bool isPaused;
+    private ParticleSystem[] vfx;
 
     private void Awake()
     {
+        vfx = GetComponentsInChildren<ParticleSystem>();
         _gridManager = FindObjectOfType<GridManager>();
-
         fuelBar = FindObjectOfType<StatBar>();
+
     }
 
     private void Start()
@@ -147,9 +149,23 @@ public class Boat : MovingObject
     {
         if (_moveDirection != lastDirection)
         {
+            SwitchTrailVFX(false);
             float rotateTimeModifier = _moveDirection == lastDirection.Opposite() ? 2f : 1f;
             FindObjectOfType<FollowTarget>().RotateWithPlayer(_moveDirection, rotateTimeModifier);
             await RotateTowardsInSeconds(transform.rotation, _moveDirection.GetRotation(), rotateTime * rotateTimeModifier);
+            SwitchTrailVFX(true);
+        }
+    }
+
+    private void SwitchTrailVFX(bool _active)
+    {
+        if (vfx != null)
+        {
+            foreach(ParticleSystem particles in vfx)
+            {
+                particles.emissionRate = _active ? 50 : 0;
+                //particles.gameObject.SetActive(_active);
+            }
         }
     }
 
