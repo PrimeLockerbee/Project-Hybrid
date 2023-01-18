@@ -1,3 +1,4 @@
+using MarcoHelpers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,11 +13,16 @@ public class DamTile : WaterTile
     [SerializeField] public Dam damObject;
     public bool isOpen;
     public int id = -1;
+    [SerializeField] private MeshRenderer minimapDamRend;
+    [SerializeField] private Material minimapDamClosed;
+    [SerializeField] private Material minimapDamOpen;
 
     // Private Fields
     private Task currentTask;
     private Action awaitedCall;
     private bool isMoving;
+
+    private bool isChanged;
 
     protected override void Awake()
     {
@@ -25,6 +31,23 @@ public class DamTile : WaterTile
         {
             damObject = GetComponentInChildren<Dam>();
         }
+    }
+
+    private void OnEnable()
+    {
+        EventSystem.Subscribe(EventName.DAM_CHANGED, (value) => OnDamChanged(value));
+    }
+
+    private void OnDisable()
+    {
+        EventSystem.Unsubscribe(EventName.DAM_CHANGED, (value) => OnDamChanged(value));
+    }
+
+    public void OnDamChanged(object _value)
+    {
+        Debug.Log("Stap 2");
+        int changedDamID = (int)_value;
+        if (changedDamID == id) isChanged = true;
     }
 
     public void Trigger()
@@ -56,17 +79,26 @@ public class DamTile : WaterTile
 
     public async void Open()
     {
+        //isMoving = true;
+
+        minimapDamRend.material = minimapDamOpen;
+        /*currentTask = */
+        //damObject.gameObject.SetActive(false);
+        await damObject.MoveUp();
         isOpen = true;
-        isMoving = true;
-        currentTask = damObject.MoveUp();
         OnOpen?.Invoke(this);
     }
 
     public async void Close()
     {
+        //isMoving = true;
+        minimapDamRend.material = minimapDamClosed;
+
+        //damObject.gameObject.SetActive(true);
+
+        /*currentTask = */
+        await damObject.MoveDown();
         isOpen = false;
-        isMoving = true;
-        currentTask = damObject.MoveDown();
         OnClose?.Invoke(this);
     }
 
@@ -85,9 +117,10 @@ public class DamTile : WaterTile
             awaitedCall = null;
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) || isChanged)
         {
             Trigger();
+            isChanged = false;
         }
     }
 }

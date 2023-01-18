@@ -15,7 +15,7 @@ public class FollowTarget : MovingObject
 
     private void CustomUpdate()
     {
-        Debug.Log("CUSTOM");
+        //Debug.Log("CUSTOM");
         Vector3 directionToTarget = target.position - transform.position;
         float distanceToPlayer = directionToTarget.magnitude;
 

@@ -14,7 +14,7 @@ public class WaterTile : Tile
     public bool isSpawnPos;
 
     [HideInInspector] public float yPos;
-    [SerializeField] private TrashSpawner[] trash;
+    [HideInInspector] private TrashSpawner[] trash;
 
     [SerializeField] private float animationTime;
 

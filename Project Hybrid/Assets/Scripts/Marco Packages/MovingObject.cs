@@ -13,6 +13,7 @@ public class MovingObject : MonoBehaviour
     /// <param name="timeInSeconds"></param>
     public async Task MoveToInSeconds(Vector3 oldPos, Vector3 targetPos, float timeInSeconds)
     {
+        Debug.Log("Stap 4");
         transform.position = oldPos;
         float distance = Vector3.Distance(oldPos, targetPos);
         float moveSpeed = distance / timeInSeconds;

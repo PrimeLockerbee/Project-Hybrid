@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 /// <summary>
@@ -29,6 +30,10 @@ public class ArduinoInput : MonoBehaviour
         {
             inputLists.Add(i, new Queue<bool>(inputListsCapacity));
         }
+
+        Thread arduinoThread = new Thread(new ThreadStart(SendInput));
+        arduinoThread.IsBackground = true;
+        arduinoThread.Start();
     }
 
     private void TryOpenSerialPort()
@@ -51,7 +56,7 @@ public class ArduinoInput : MonoBehaviour
     private void Update()
     {
         if (!isPortOpen) return;
-        SendInput();
+        //SendInput();
 
         // Optional
         if (Input.GetKeyDown(KeyCode.X)) CloseSerialPort();
@@ -60,60 +65,72 @@ public class ArduinoInput : MonoBehaviour
     // Parses data from the serial.println of the arduino.
     public void SendInput()
     {
-        if (inputManager == null) return;
-
-        string dataString = serialPort.ReadLine();
-        //string dataString = "Boop";
-
-        if (dataString.Contains("DETECTED"))
+        while (inputManager != null)
         {
-            int id = 0;
+            Debug.Log("Arduino");
+            if (inputManager == null || !isPortOpen) continue;
+
+            string dataString;
             try
             {
-                id = int.Parse(dataString[9].ToString());
+                dataString = serialPort.ReadLine();
             }
             catch (Exception e)
             {
-                Debug.Log("Could not parse Dam ID");
-                return;
+                continue;
             }
+            //string dataString = "Boop";
 
-            bool isDamOpen = true;
-
-            Queue<bool> inputList = inputLists[id];
-            if (inputList.Count >= inputListsCapacity) inputList.Dequeue();
-            inputList.Enqueue(isDamOpen);
-
-            if (IsMoreThanHalfTrue(inputList))
+            if (dataString.Contains("DETECTED"))
             {
-                inputManager.ReceiveDamValue(id, isDamOpen);
+                int id = 0;
+                try
+                {
+                    id = int.Parse(dataString[9].ToString());
+                }
+                catch (Exception e)
+                {
+                    Debug.Log("Could not parse Dam ID");
+                    continue;
+                }
+
+                bool isDamOpen = true;
+
+                Queue<bool> inputList = inputLists[id];
+                if (inputList.Count >= inputListsCapacity) inputList.Dequeue();
+                inputList.Enqueue(isDamOpen);
+
+                if (IsMoreThanHalfTrue(inputList))
+                {
+                    inputManager.ReceiveDamValue(id, isDamOpen);
+                }
             }
-        }
-        else if (dataString.Contains("NO LASER"))
-        {
-            int id = 0;
-            try
+            else if (dataString.Contains("NO LASER"))
             {
-                id = int.Parse(dataString[9].ToString());
+                int id = 0;
+                try
+                {
+                    id = int.Parse(dataString[9].ToString());
+                }
+                catch (Exception e)
+                {
+                    Debug.Log("Could not parse Dam ID");
+                    continue;
+                }
+
+                bool isDamOpen = false;
+
+                Queue<bool> inputList = inputLists[id];
+                if (inputList.Count >= inputListsCapacity) inputList.Dequeue();
+                inputList.Enqueue(isDamOpen);
+
+                if (!IsMoreThanHalfTrue(inputList))
+                {
+                    inputManager.ReceiveDamValue(id, isDamOpen);
+                }
+
+                //inputManager.ReceiveDamValue(id, isDamOpen);
             }
-            catch (Exception e)
-            {
-                Debug.Log("Could not parse Dam ID");
-                return;
-            }
-
-            bool isDamOpen = false;
-
-            Queue<bool> inputList = inputLists[id];
-            if (inputList.Count >= inputListsCapacity) inputList.Dequeue();
-            inputList.Enqueue(isDamOpen);
-
-            if (!IsMoreThanHalfTrue(inputList))
-            {
-                inputManager.ReceiveDamValue(id, isDamOpen);
-            }
-
-            inputManager.ReceiveDamValue(id, isDamOpen);
         }
     }
 
@@ -123,43 +140,53 @@ public class ArduinoInput : MonoBehaviour
     }
 
     // Parses data from the serial.println of the arduino.
-    /*public void SendInput()
+/*    public void SendInput()
     {
-        if (inputManager == null) return;
-
-        //string dataString = serialPort.ReadLine();
-        string dataString = "Dam1: 1";
-
-        if (dataString.Contains("Dam"))
+        while (inputManager != null)
         {
-            int id = 0;
+            if (inputManager == null || !isPortOpen) return;
+
+            string dataString;
             try
             {
-                id = int.Parse(dataString[3].ToString());
+                dataString = serialPort.ReadLine();
             }
             catch (Exception e)
             {
-                Debug.Log("Could not parse Dam ID");
-                return;
+                continue;
             }
 
-            bool isDamOpen = false;
-            try
+            if (dataString.Contains("Dam"))
             {
-                int damValue = int.Parse(dataString[6].ToString());
-                isDamOpen = Convert.ToBoolean(damValue);
+                int id = 0;
+                try
+                {
+                    id = int.Parse(dataString[3].ToString());
+                }
+                catch (Exception e)
+                {
+                    Debug.Log("Could not parse Dam ID");
+                    return;
+                }
+
+                bool isDamOpen = false;
+                try
+                {
+                    int damValue = int.Parse(dataString[6].ToString());
+                    isDamOpen = Convert.ToBoolean(damValue);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log($"Could not parse Dam Value of Dam {id}");
+                    return;
+                }
+
+                inputManager.ReceiveDamValue(id, isDamOpen);
             }
-            catch (Exception e)
+            else if (dataString.Contains("Button"))
             {
-                Debug.Log($"Could not parse Dam Value of Dam {id}");
-                return;
+
             }
-
-            inputManager.ReceiveDamValue(id, isDamOpen);
-        }
-        else if (dataString.Contains("Button"))
-        {
-
         }
     }*/
     #endregion

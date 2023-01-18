@@ -168,6 +168,9 @@ MonoBehaviour:
   damObject: {fileID: 0}
   isOpen: 0
   id: -1
+  minimapDamRend: {fileID: 4404519502969120723}
+  minimapDamClosed: {fileID: 2100000, guid: 67182258220f23e4a8a1f63f5f9e19bd, type: 2}
+  minimapDamOpen: {fileID: 2100000, guid: 2dc2a9c22b7ad6e47a0347ff8642c4fd, type: 2}
 --- !u!1 &2812526020882633739
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +283,7 @@ GameObject:
   - component: {fileID: 4404519502969120724}
   - component: {fileID: 4404519502969120721}
   m_Layer: 12
-  m_Name: Dam
+  m_Name: Minimap Dam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

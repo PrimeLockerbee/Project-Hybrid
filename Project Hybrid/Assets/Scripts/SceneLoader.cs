@@ -9,4 +9,9 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene(_num);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

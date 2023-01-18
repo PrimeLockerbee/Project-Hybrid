@@ -1,3 +1,4 @@
+using MarcoHelpers;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,9 +47,10 @@ public class InputManager : MonoBehaviour
 
         if (damTiles.ContainsKey(_id))
         {
+            Debug.Log("Stap 1");
             DamTile tile = damTiles[_id];
-            tile.Trigger();
+            tile.OnDamChanged(_id);
+            //EventSystem.RaiseEvent(EventName.DAM_CHANGED, _id);
         }
-
     }
 }
