@@ -41,6 +41,8 @@ public class Boat : MovingObject
     private void Awake()
     {
         _gridManager = FindObjectOfType<GridManager>();
+
+        fuelBar = FindObjectOfType<StatBar>();
     }
 
     private void Start()

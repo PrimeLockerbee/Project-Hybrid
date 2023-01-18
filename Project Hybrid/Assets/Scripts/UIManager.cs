@@ -12,6 +12,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text percentageText;
     [SerializeField] private Text funFactText;
 
+    [SerializeField] private GameObject minimap;
+    [SerializeField] private GameObject fuelbar;
+
     [Header("Fun facts")]
     [SerializeField] private List<FunFact> funFacts;
 
@@ -35,7 +38,11 @@ public class UIManager : MonoBehaviour
 
     public void ShowEndScreen()
     {
-        menu.SetActive(true);
+        if (minimap != null) minimap.SetActive(false);
+        if (fuelbar != null) fuelbar.SetActive(false);
+
+        if (menu != null) menu.SetActive(true);
+
         int cleanPercentage = gridManager.CalculateCleanPercent();
         percentageText.text = $"You have removed {cleanPercentage}% of garbage from the ocean";
         funFactText.text = GetFunFactText(cleanPercentage);

@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 0920445ed5cf07942ad47ca19499ac60
   - enabled: 1
-    path: Assets/Scenes/Maze ART.unity
-    guid: 9550305b7bd86204fbdeac0a9830cbc5
+    path: Assets/Scenes/Maze Playtest.unity
+    guid: 181204429e0591744a4e5c920270d416
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 0bdbe8433d97e3d46ab59656fec90098,
       type: 2}

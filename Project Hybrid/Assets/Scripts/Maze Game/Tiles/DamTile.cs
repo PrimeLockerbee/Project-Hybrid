@@ -84,9 +84,9 @@ public class DamTile : WaterTile
         minimapDamRend.material = minimapDamOpen;
         /*currentTask = */
         //damObject.gameObject.SetActive(false);
-        await damObject.MoveUp();
         isOpen = true;
         OnOpen?.Invoke(this);
+        await damObject.MoveUp();
     }
 
     public async void Close()
@@ -97,9 +97,9 @@ public class DamTile : WaterTile
         //damObject.gameObject.SetActive(true);
 
         /*currentTask = */
-        await damObject.MoveDown();
         isOpen = false;
         OnClose?.Invoke(this);
+        await damObject.MoveDown();
     }
 
     public override void Clean()

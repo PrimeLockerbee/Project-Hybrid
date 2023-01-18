@@ -17,7 +17,7 @@ public class ArduinoInput : MonoBehaviour
 
     private InputManager inputManager;
     private Dictionary<int, Queue<bool>> inputLists = new Dictionary<int, Queue<bool>>();
-    private int inputListsCapacity = 10;
+    private int inputListsCapacity = 2;
     #endregion
 
     #region Opening Serial Port
