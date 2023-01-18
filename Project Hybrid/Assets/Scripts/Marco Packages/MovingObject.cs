@@ -13,7 +13,6 @@ public class MovingObject : MonoBehaviour
     /// <param name="timeInSeconds"></param>
     public async Task MoveToInSeconds(Vector3 oldPos, Vector3 targetPos, float timeInSeconds)
     {
-        Debug.Log("Stap 4");
         transform.position = oldPos;
         float distance = Vector3.Distance(oldPos, targetPos);
         float moveSpeed = distance / timeInSeconds;
@@ -57,7 +56,7 @@ public class MovingObject : MonoBehaviour
      */
     public async Task RotateWithSlerpInSeconds(Quaternion oldRotation, Quaternion targetRotation, float timeInSeconds)
     {
-        //float angle = Quaternion.Angle(oldRotation, targetRotation);
+        //float angle = Quaternion.Angle(closedRotation, targetRotation);
         //float rotationSpeed = angle / timeInSeconds;
         float t = 0;
 
