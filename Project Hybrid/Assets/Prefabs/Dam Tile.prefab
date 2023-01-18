@@ -161,7 +161,6 @@ MonoBehaviour:
   isCleaned: 0
   isSpawnPos: 0
   yPos: 0
-  trash: []
   animationTime: 0.4
   minimapRenderer: {fileID: 329378381823769074}
   waterRenderer: {fileID: 7175696034384479329}
@@ -221,7 +220,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2812526020882633739}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

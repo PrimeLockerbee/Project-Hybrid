@@ -20,21 +20,36 @@ public class UIManager : MonoBehaviour
 
     private GridManager gridManager;
 
-    void Start()
+    private void Awake()
+    {
+        ServiceLocator.RegisterService(this);
+    }
+
+    private void Start()
     {
         gridManager = ServiceLocator.GetService<GridManager>();
         HideEndScreen();
+
+        //ShowEndScreen();
     }
 
-    private void OnEnable()
+    private void Update()
     {
-        EventSystem.Subscribe(EventName.FUEL_EMPTY, (value) => ShowEndScreen());
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ReloadScene();
+        }
     }
 
-    private void OnDisable()
-    {
-        EventSystem.Unsubscribe(EventName.FUEL_EMPTY, (value) => ShowEndScreen());
-    }
+    /*    private void OnEnable()
+        {
+            EventSystem.Subscribe(EventName.FUEL_EMPTY, (value) => ShowEndScreen());
+        }
+
+        private void OnDisable()
+        {
+            EventSystem.Unsubscribe(EventName.FUEL_EMPTY, (value) => ShowEndScreen());
+        }*/
 
     public void ShowEndScreen()
     {

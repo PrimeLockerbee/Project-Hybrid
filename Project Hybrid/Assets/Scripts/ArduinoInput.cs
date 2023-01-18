@@ -67,8 +67,8 @@ public class ArduinoInput : MonoBehaviour
     {
         while (inputManager != null)
         {
-            Debug.Log("Arduino");
             if (inputManager == null || !isPortOpen) continue;
+            Debug.Log("Arduino");
 
             string dataString;
             try

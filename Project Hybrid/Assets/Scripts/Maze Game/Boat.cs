@@ -83,7 +83,7 @@ public class Boat : MovingObject
         if (fuel <= 0)
         {
             isPaused = true;
-            EventSystem.RaiseEvent(EventName.FUEL_EMPTY);
+            ServiceLocator.GetService<UIManager>().ShowEndScreen();
         }
 
         if (fuelBar != null)

@@ -33,6 +33,7 @@ public class WaterTile : Tile
 
     private void Start()
     {
+        yPos = transform.position.y;
         if (isCleaned && minimapRenderer != null)
         {
             minimapRenderer.material = minimapWaterMat;
@@ -51,13 +52,13 @@ public class WaterTile : Tile
 
     private async void OnLevelChanged(int _waterLevel)
     {
-        //Debug.Log("Changed!");
+/*        //Debug.Log("Changed!");
         Vector3 newPos = transform.position;
         yPos = level * .5f - 0.5f;
         newPos.y = yPos;
         //await MoveToInSeconds(transform.position, newPos, animationTime * 2);
 
-        transform.position = newPos;
+        transform.position = newPos;*/
     }
 
     public virtual void Clean()
