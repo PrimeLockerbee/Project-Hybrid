@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 0920445ed5cf07942ad47ca19499ac60
   - enabled: 1
+    path: Assets/Scenes/Final Scene.unity
+    guid: 0b6805dc1585ebd4a92df77d9e99b190
+  - enabled: 0
     path: Assets/Scenes/Maze Playtest.unity
     guid: 181204429e0591744a4e5c920270d416
   m_configObjects:
