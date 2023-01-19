@@ -228,7 +228,12 @@ PrefabInstance:
     - target: {fileID: 8917319155725658578, guid: d8fbb8e890a1e674480a347f0058e793,
         type: 3}
       propertyPath: tileCleanFuelBonus
-      value: 1.75
+      value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917319155725658578, guid: d8fbb8e890a1e674480a347f0058e793,
+        type: 3}
+      propertyPath: waterClimbFuelCost
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8917319155725658578, guid: d8fbb8e890a1e674480a347f0058e793,
         type: 3}
