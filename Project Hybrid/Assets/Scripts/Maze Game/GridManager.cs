@@ -31,22 +31,24 @@ public class GridManager : MonoBehaviour
         {
             tile.StoreNeighbours(grid);
         }
-    }
 
-    private void Start()
-    {
         waterTiles = tiles.Select(t => t as WaterTile)
-                            .Where(t => t != null).ToList();
+                    .Where(t => t != null).ToList();
 
         preLeveledTiles = tiles.Select(t => t as WaterTile)
-                                                .Where(t => t != null 
-                                                            && !(t is DamTile) 
+                                                .Where(t => t != null
+                                                            && !(t is DamTile)
                                                             && t.waterLevel != 0)
                                                 .ToList();
 
         DistributeHighTiles(highTiles);
         SpawnBoat();
         DivideWaterLevels();
+    }
+
+    private void Start()
+    {
+
     }
 
     private void OnEnable()

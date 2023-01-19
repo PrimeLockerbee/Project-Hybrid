@@ -1,14 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject prefab;
+    private FlyCamera flyCamera;
+    private Camera boatCamera;
+    private Boat boat;
 
     private void Awake()
     {
-        Instantiate(prefab);
+        flyCamera = FindObjectOfType<FlyCamera>();
     }
 
+    private async void Start()
+    {
+        // Do Camera Stuff
+        boatCamera = FindObjectOfType<FollowTarget>().GetComponentInChildren<Camera>();
+        boat = FindObjectOfType<Boat>();
+        boatCamera.gameObject.SetActive(false);
+        await flyCamera.Play(boat.transform.position);
+
+        // Start Boat
+        flyCamera.gameObject.SetActive(false);
+        boatCamera.gameObject.SetActive(true);
+        boat.OnStart();
+    }
 }

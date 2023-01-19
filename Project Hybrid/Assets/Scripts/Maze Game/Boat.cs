@@ -49,6 +49,11 @@ public class Boat : MovingObject
 
     private void Start()
     {
+        //OnStart();
+    }
+
+    public void OnStart()
+    {
         currentSpeed = speed;
         fuel = maxFuel / 2;     // Start with half of the max fuel
 
