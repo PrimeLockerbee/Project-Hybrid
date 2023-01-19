@@ -33,15 +33,20 @@ public class DamTile : WaterTile
         }
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        EventSystem.Subscribe(EventName.DAM_CHANGED, (value) => OnDamChanged(value));
+        stromingFX.gameObject.SetActive(false);
     }
 
-    private void OnDisable()
-    {
-        EventSystem.Unsubscribe(EventName.DAM_CHANGED, (value) => OnDamChanged(value));
-    }
+    /*    private void OnEnable()
+        {
+            EventSystem.Subscribe(EventName.DAM_CHANGED, (value) => OnDamChanged(value));
+        }
+
+        private void OnDisable()
+        {
+            EventSystem.Unsubscribe(EventName.DAM_CHANGED, (value) => OnDamChanged(value));
+        }*/
 
     public void OnDamChanged(object _value)
     {
@@ -81,6 +86,7 @@ public class DamTile : WaterTile
     {
         //isMoving = true;
 
+        stromingFX.gameObject.SetActive(true);
         minimapDamRend.material = minimapDamOpen;
         /*currentTask = */
         //damObject.gameObject.SetActive(false);
@@ -92,6 +98,7 @@ public class DamTile : WaterTile
     public async void Close()
     {
         //isMoving = true;
+        stromingFX.gameObject.SetActive(false);
         minimapDamRend.material = minimapDamClosed;
 
         //damObject.gameObject.SetActive(true);

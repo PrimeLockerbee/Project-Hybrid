@@ -5,7 +5,9 @@ public class FollowTarget : MovingObject
     [SerializeField] private Transform target;
     [SerializeField] private float rotateTime;
     [SerializeField] private float raycastInterval = 0.4f;
+    [SerializeField] private LayerMask layer;
     private Vector3 offsetToTarget;
+
 
     private void Start()
     {
@@ -20,7 +22,7 @@ public class FollowTarget : MovingObject
         float distanceToPlayer = directionToTarget.magnitude;
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, directionToTarget.normalized, out hit, distanceToPlayer, LayerMask.NameToLayer("CameraHide")))
+        if (Physics.Raycast(transform.position, directionToTarget.normalized, out hit, distanceToPlayer, layer))
         {
             Debug.Log("Hit!");
             HideFromCamera hideObject = hit.collider.gameObject.GetComponent<HideFromCamera>();
