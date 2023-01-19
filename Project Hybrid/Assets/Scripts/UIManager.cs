@@ -29,8 +29,14 @@ public class UIManager : MonoBehaviour
     {
         gridManager = ServiceLocator.GetService<GridManager>();
         HideEndScreen();
-
+        fuelbar.gameObject.SetActive(false);
+        Invoke(nameof(ShowFuelBar), 5f);
         //ShowEndScreen();
+    }
+
+    private void ShowFuelBar()
+    {
+        fuelbar.gameObject.SetActive(true);
     }
 
     private void Update()

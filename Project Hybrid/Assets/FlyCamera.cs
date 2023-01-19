@@ -21,6 +21,7 @@ public class FlyCamera : MovingObject
     {
         Debug.Log(_position + offsetFromBoat);
         RotateTowardsInSeconds(transform.rotation, endRotation, animationDuration);
+        RenderSettings.fogDensity += 0.01f * Time.deltaTime;
         await MoveToInSecondsWithCurve(transform.position, _position + offsetFromBoat, animationDuration);
     }
 

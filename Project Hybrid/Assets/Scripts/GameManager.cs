@@ -23,5 +23,6 @@ public class GameManager : MonoBehaviour
         flyCamera.gameObject.SetActive(false);
         boatCamera.gameObject.SetActive(true);
         boat.OnStart();
+        RenderSettings.fogDensity = 0.005f;
     }
 }

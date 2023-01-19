@@ -14,7 +14,7 @@ public class StatBar : MonoBehaviour
 
     public void SetSliderValue(float _value)
     {
-        _value = Mathf.Clamp01(_value);
+        _value = Helpers.Map(0, 1, .3f, 1, _value);
         if (slider != null)
         {
             slider.value = _value;

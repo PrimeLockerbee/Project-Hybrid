@@ -117,8 +117,8 @@ public class WaterTile : Tile
         }
     }
 
-    private void OnDrawGizmos()
+/*    private void OnDrawGizmos()
     {
         Handles.Label(transform.position.ToVector3Int(), waterLevel.ToString());
-    }
+    }*/
 }

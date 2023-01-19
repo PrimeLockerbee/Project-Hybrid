@@ -44,8 +44,8 @@ public class FollowTarget : MovingObject
         RotateWithSlerpInSeconds(transform.rotation, _moveDirection.GetRotation(), rotateTime * _timeModifier);
     }
 
-    private void OnDrawGizmos()
+/*    private void OnDrawGizmos()
     {
         Gizmos.DrawRay(transform.position, target.position - transform.position);
-    }
+    }*/
 }
