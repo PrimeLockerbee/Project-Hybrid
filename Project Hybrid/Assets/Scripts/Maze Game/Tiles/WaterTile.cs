@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEditor;
 using UnityEngine;
 
@@ -18,6 +20,7 @@ public class WaterTile : Tile
 
     [SerializeField] private float animationTime;
 
+    [SerializeField] protected GameObject stromingFX;
     [SerializeField] private MeshRenderer minimapRenderer;
     [SerializeField] private MeshRenderer waterRenderer;
     private int level;
@@ -52,13 +55,46 @@ public class WaterTile : Tile
 
     private async void OnLevelChanged(int _waterLevel)
     {
-/*        //Debug.Log("Changed!");
-        Vector3 newPos = transform.position;
-        yPos = level * .5f - 0.5f;
-        newPos.y = yPos;
-        //await MoveToInSeconds(transform.position, newPos, animationTime * 2);
+        //Debug.Log("Changed!");
+        if (stromingFX == null) return;
 
-        transform.position = newPos;*/
+        WaterTile highestNeighbour = null;
+        WaterTile tiedNeighbour = null;
+        List<WaterTile> neighbours = neighbourList.Select(t => t as WaterTile)
+                                                    .Where(t => t != null)
+                                                    .OrderByDescending(t => t.waterLevel)
+                                                    .ToList();
+
+        if (neighbours.Count() > 0 )
+        {
+            highestNeighbour= neighbours[0];
+
+            if (neighbours.Count() > 1 && highestNeighbour.waterLevel == neighbours[1].waterLevel)
+            {
+                tiedNeighbour = neighbours[1];
+            }
+        }
+
+        if (highestNeighbour != null && tiedNeighbour == null)
+        {
+            Direction neighbourDirection = neighbourDictionary[highestNeighbour];
+            stromingFX.transform.rotation = neighbourDirection.GetRotation() * Quaternion.AngleAxis(90, Vector3.up);
+        }
+        else if (highestNeighbour != null && tiedNeighbour != null)
+        {
+            Direction neighbourDirection1 = neighbourDictionary[highestNeighbour];
+            Direction neighbourDirection2 = neighbourDictionary[tiedNeighbour];
+            if (neighbourDirection1 != neighbourDirection2.Opposite())
+            {
+                stromingFX.transform.rotation = Quaternion.Slerp(neighbourDirection1.GetRotation(), neighbourDirection2.GetRotation(), 0.5f); //* Quaternion.AngleAxis(90, Vector3.up);
+            }
+        }
+        /*        Vector3 newPos = transform.position;
+                yPos = level * .5f - 0.5f;
+                newPos.y = yPos;
+                //await MoveToInSeconds(transform.position, newPos, animationTime * 2);
+
+                transform.position = newPos;*/
     }
 
     public virtual void Clean()

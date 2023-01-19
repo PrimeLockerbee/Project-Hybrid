@@ -116,7 +116,7 @@ Material:
     - _SrcBlend: 1
     - _Surface: 0
     - _Temperature: 0.904
-    - _WaterAlpha: 0.816
+    - _WaterAlpha: 0.3
     - _WaterCurrentRotation: 5.702
     - _WaterRotation: 5.69
     - _WaterRotation_1: -0.61
