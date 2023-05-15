@@ -1,3 +1,6 @@
-# Project-Hybrid
-A repository for project Hybrid.
-TEST PUSH 1.
+# Pollution Revolution
+Guide a trash-collecting boat through a virtual maze by altering the maze in the real world!
+
+In Pollution Revolution, players guide a virtual ship through a maze, by altering a physical replica of this maze. Players can move dams in the physical maze to open these dams in the virtual maze so the boat is able to pass through these dams. The goal of the game is to clean all of the debris in the virtual maze by guiding the ship through the entire maze before the ship runs out of fuel.
+
+The boat in the virtual maze automatically moves forward using an AI system and tries to collect as much garbage from the water as it can. When it hits a dead end, it will turn around and continue moving. The movement of this boat is determined using a tile-based grid. There are three types of tiles: grass tiles, water tiles and dam tiles. The boat can sail over water tiles, and dam tiles with an open dam. On every tile, the boat will decide which of the current tile’s adjacent tiles it should go to. Each of the adjacent tiles will score points and the boat will continue to the tile with the lowest score. This score is affected by various factors, like the height of the water, the amount of garbage and the direction of the boat.
